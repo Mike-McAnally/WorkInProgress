@@ -8,9 +8,11 @@ https://www.youtube.com/watch?v=QrNP_QLdaRM&feature=youtu.be
 * https://nodejs.org/en
 
 2. Install modules needed to run node server
-* `npm install`
+   `npm install`
 
-3. Run node app
-* `npm start`
+3. Download files into a local Node dir 
 
-4. Connect to http://localhost:3025/Islands.html with multiple devices
+4. Run the node app
+   `npm start`
+
+5. Open WebVR enabled browser and connect to http://localhost:3025/Islands.html with multiple devices
