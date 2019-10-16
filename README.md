@@ -13,4 +13,4 @@ https://www.youtube.com/watch?v=QrNP_QLdaRM&feature=youtu.be
 3. Run node app
 * `npm start`
 
-4. Connect to http://localhost:3025/VRnodeLabelA5.html with multiple devices
+4. Connect to http://localhost:3025/Islands.html with multiple devices
