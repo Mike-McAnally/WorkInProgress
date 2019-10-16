@@ -1,0 +1,213 @@
+<!DOCTYPE>
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,shrink-to-fit=no,user-scalable=no,maximum-scale=1,minimum-scale=1">
+    <title>Mind Palace VR Node B</title>
+    <meta name="description" content="This is a single node in the Mind Palace structure."></meta>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="gray-translucent" />
+<!-- A-frame component libraries -->
+    <script src="js/aframe-master.min.js"></script>
+    <script src="js/aframe-environment-component.js"></script>
+    <script src="js/aframe-extras.min.js"></script>
+    <script src="js/aframe-teleport-controls.min.js"></script>
+    <script src="js/aframe-text-geometry-component.min.js"></script>
+    <!-- extra stuff for later on... you can look them up on github  -->
+    <script src="js/aframe-alongpath-component.min.js"></script>
+    <script src="js/aframe-curve-component.min.js"></script>
+    <script src="js/aframe-mouse-cursor-component.min.js"></script>
+    <script src="js/aframe-multisrc-component.js"></script>
+    <script src="js/aframe-particle-system-component.min.js"></script>
+    <!-- for simple transarent rounded panels...  https://github.com/etiennepinchon/aframe-rounded -->
+    <script src="js/aframe-rounded-component.min.js"></script>
+
+    <!-- Libs required for NAF (NAF needs to be globally accessible) -->
+    <script>window.NAF || document.write('<script src="js/networked-aframe.min.js">\x3C/script>')</script>
+    <script src="js/socket.io.min.js"></script>
+    <script src="js/easyrtc.js"></script>
+<!-- see a-frame scene below https://github.com/donmccurdy/aframe-inspector-plugin-recast
+    <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
+-->
+
+        <script type="text/javascript">
+
+
+      // Component to do on click.
+      AFRAME.registerComponent('click-listener', {
+        init: function () {
+
+            this.el.addEventListener('click', function (evt) {
+
+                // remove clicked object from view
+                this.setAttribute('visible', false);
+                //slower...
+                //document.getElementById('cube').setAttribute('visible', false);
+
+
+            });
+        }
+      });
+
+      function doSomethingElse() {
+        //window.location.href="https://rocketvirtual.com";
+        document.getElementById('sphere').setAttribute('color', 'purple');
+      }
+
+      //   audio problem (and it is...) https://stackoverflow.com/questions/47921013/play-sound-on-click-in-a-frame?answertab=active#tab-top
+      AFRAME.registerComponent('audiohandler', {
+        init:function() {
+            let playing = false;
+            let audio = document.querySelector("#playAudio");
+            this.el.addEventListener('click', () => {
+
+                if(!playing) {
+                    audio.play();
+                } else {
+                    audio.pause();
+                    audio.currentTime = 0;
+                }
+                playing = !playing;
+            });
+        }
+      })
+
+
+      function GoNode(nodeURL) {
+        window.location.href = "/" + nodeURL;
+      }
+
+
+  </script>
+
+  </head>
+  <body>
+
+    <button id="playButton" type="button">Play Music</button>
+    <!-- I like the sound of this fun, joyful Carnival Banna tune for game: this "Royalty Purchase" for 10,000 downloads -->
+    <audio id="playAudio" autoplay loop>
+<!--        <source src="https://rocketvirtual.com/webvr/mp3/Carnival_Banana.mp3" type="audio/mpeg">    -->
+    </audio>
+
+<!-- used for creating Navmesh... see javascript component above <a-scene inspector-plugin-recast>  https://github.com/donmccurdy/aframe-inspector-plugin-recast-->
+
+    <a-scene networked-scene="room: B5; debug: true; adapter: wseasyrtc;" background="color: #FAFAFA">
+
+      <a-assets>
+
+        <img crossorigin="anonymous" id="VRnode_CPortal" src="img/Portal_Desert.png">
+        <img crossorigin="anonymous" id="grid" src="img/opaic_grid.png">
+
+        <img crossorigin="anonymous" id="orb" src="/assets/360/image/SAM_101_0100.jpg">
+
+        <a-mixin id="marble" scale=".30 .30 .30" material="color: white" animation__rotation="startEvents: mouseenter; pauseEvents: mouseleave; resumeEvents: mouseenter; property: rotation; to: 0 360 0; loop: true; dur: 10000" animation__mouseenter="startEvents: mouseenter; pauseEvents: mouseleave; resumeEvents: mouseenter; property: components.material.material.color; type: color; to: white;  dur: 500; " animation__mouseleave="property: components.material.material.color; type: color; to: gray; startEvents: mouseleave; dur: 500;" shadow ></a-mixin>
+
+        <img crossorigin="anonymous" id="orbthumb1" src="/assets/360/image/thumb/SAM_101_0108_thumb.jpg">
+        <img crossorigin="anonymous" id="orbthumb2" src="/assets/360/image/thumb/SAM_101_0101_thumb.jpg">
+        <img crossorigin="anonymous" id="orbthumb4" src="/assets/360/image/thumb/SAM_101_0109_thumb.jpg">
+        <img crossorigin="anonymous" id="orbthumb5" src="/assets/360/image/thumb/SAM_100_0052_thumb.jpg">
+        <img crossorigin="anonymous" id="orbthumb6" src="/assets/360/image/thumb/SAM_100_0042_thmb.jpg">
+        <img crossorigin="anonymous" id="orbthumb7" src="/assets/360/image/thumb/SAM_101_0341_thumb.jpg">
+        <img crossorigin="anonymous" id="orbthumb8" src="/assets/360/image/thumb/SAM_101_0343_thumb.jpg">
+        <img crossorigin="anonymous" id="orbthumb9" src="/assets/360/image/thumb/SAM_101_0346_thumb.jpg">
+
+        <template id="avatar-template">
+          <a-entity></a-entity>
+        </template>
+        
+        <template id="head-template">
+          <a-entity class="cam" obj-model="obj: url(assets/head.obj); mtl: url(assets/head.mtl)"></a-entity>
+        </template>
+        
+        <template id="hand-template">
+          <a-entity class="leftController">
+            <a-box class="box" scale="0.1 0.1 0.1"></a-box>
+          </a-entity>
+        </template>
+      </a-assets>
+
+      <a-entity id="mouseCursor" cursor="rayOrigin: mouse"></a-entity>
+
+      <a-sky id="orbSky" material="src: #orb" rotation="0 0 0" ></a-sky>
+
+      <a-entity id="NodeName" position="-0.95018 -1.79712 -2.84702" rotation="-39.4 0 0" text-geometry="value: Node - Step Four.; opacity: .5; size: .175; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
+
+
+      <!-- Basic movement, selection and teleport  -->
+      <a-entity id="avatar" networked="template:#avatar-template;attachTemplateToLocal:false;"
+        movement-controls="constrainToNavMesh: true;" position="0 0 5">
+        <a-entity class="cam" networked="template:#head-template;attachTemplateToLocal:false;" camera="active: true"
+          position="0 1.6 0" look-controls="pointerLockEnabled: true"></a-entity>
+        <a-entity class="leftController" networked="template:#leftController-template;attachTemplateToLocal:false;"
+          hand-controls="left" tracked-controls vive-controls="hand: left" oculus-touch-controls="hand: left"
+          windows-motion-controls="hand: left"
+          teleport-controls="cameraRig: #avatar; button: trigger; curveShootingSpeed: 10; collisionEntities: #navmesh-step;"
+          visible="true" scale="0.8 0.8 0.8"></a-entity>
+        <a-entity class="rightController" networked="template:#rightController-template;attachTemplateToLocal:false;"
+          hand-controls="right" tracked-controls vive-controls="hand: right" oculus-touch-controls="hand: right"
+          windows-motion-controls="hand: right" laser-controls
+          raycaster="showLine: true; far: 20; interval: 0; objects: .clickable, a-link;" line="color: lawngreen; opacity: 0.5"
+          visible="true" scale="0.8 0.8 0.8"></a-entity>
+      </a-entity>
+
+      <a-entity id="OrbName_place1" position="-2.25805 -0.598 -4.5" rotation="-24.697 0 0" text-geometry="value: Orb - H1J.; size: 0.09; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
+      <a-entity id="OrbName_place2" position="-1.252 -0.598 -4.5" rotation="-24.697 0 0" text-geometry="value: Orb - H1K.; size: 0.09; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
+      <a-entity id="OrbName_place3" position="0.723 -0.598 -4.5" rotation="-24.697 0 0" text-geometry="value: Orb - H1L.; size: 0.09; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
+      <a-entity id="OrbName_place4" position="1.687 -0.598 -4.5" rotation="-24.697 0 0" text-geometry="value: Orb - H1M.; size: 0.09; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
+      <a-entity id="OrbName_place5" position="-1.775 -1.110 -4" rotation="-24.697 0 0" text-geometry="value: Orb - H1N.; size: 0.09; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
+      <a-entity id="OrbName_place6" position="-0.775 -1.110 -4" rotation="-24.697 0 0" text-geometry="value: Orb - H1O.; size: 0.09; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
+      <a-entity id="OrbName_place7" position="0.225 -1.110 -4" rotation="-24.697 0 0" text-geometry="value: Orb - H1P.; size: 0.09; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
+      <a-entity id="OrbName_place8" position="1.192 -1.110 -4" rotation="-24.697 0 0" text-geometry="value: Orb - H1Q.; size: 0.09; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
+
+      <a-sphere id="orb_place1" class="clickable" mixin="marble" position="-2 -1 -4.5" rotation="0 -125 0" material="src: #orbthumb1" onclick="GoNode('VRnodeLabelH1J.html');" ></a-sphere>
+      <a-sphere id="orb_place2" class="clickable" mixin="marble" position="-1 -1 -4.5" rotation="0 85 0" material="src: #orbthumb2" onclick="GoNode('VRnodeLabelH1K.html');" ></a-sphere>
+      <a-sphere id="orb_place4" class="clickable" mixin="marble" position="1 -1 -4.5" rotation="0 -75 0" material="src: #orbthumb4" onclick="GoNode('VRnodeLabelH1L.html');" ></a-sphere>
+      <a-sphere id="orb_place5" class="clickable" mixin="marble" position="2 -1 -4.5" rotation="0 -90 0" material="src: #orbthumb5" onclick="GoNode('VRnodeLabelH1M.html');" ></a-sphere>
+      <a-sphere id="orb_place6" class="clickable" mixin="marble" position="-1.5 -1.5 -4" rotation="0 -75 0" material="src: #orbthumb6" onclick="GoNode('VRnodeLabelH1N.html');" ></a-sphere>
+      <a-sphere id="orb_place7" class="clickable" mixin="marble" position="-.5 -1.5 -4" rotation="0 -75 0" material="src: #orbthumb7" onclick="GoNode('VRnodeLabelH1O.html');" ></a-sphere>
+      <a-sphere id="orb_place8" class="clickable" mixin="marble" position=".5 -1.5 -4" rotation="0 45 0" material="src: #orbthumb8" onclick="GoNode('VRnodeLabelH1P.html')" ></a-sphere>
+      <a-sphere id="orb_place9" class="clickable" mixin="marble" position="1.5 -1.5 -4" rotation="0 -85 0" material="src: #orbthumb9" onclick="GoNode('VRnodeLabelH1Q.html');" ></a-sphere>
+
+      <a-rounded radius="0.1" top-left-radius="0.6" top-right-radius="0.6" bottom-left-radius="0.6" bottom-right-radius="0.6" position="-2.667 -2.20165 -4.13398" scale="0.661 0.218 0.00001" rotation="-50 0 0" width="8" height="8" color="#657383" opacity=".35" shadow="" rounded=""></a-rounded>
+
+      <a-link href="/VRnodeLabelB5.html" color="black" image="#VRnode_BPortal" visible="true" title="Gray Nexus" on="click" position="-0.04093 -0.86354 -4.60351" rotation="-31.895414539342664 -4.1900403557917105 2.168072296775035" scale=".5 .5 .5" material="shader: portal; borderEnabled: 1; pano: #VRnode_BPortal; side: back; backgroundColor: #8d85a9"></a-link>
+
+    </a-scene>
+
+    <script>
+      /**
+       * NAF Setup
+       */
+      NAF.schemas.add({
+        template: '#avatar-template',
+        components: [
+          'position',
+          'rotation',
+        ]
+      });
+
+      NAF.schemas.add({
+        template: '#head-template',
+        components: [
+          'position',
+          'rotation',
+        ]
+      });
+
+      NAF.schemas.add({
+        template: '#hand-template',
+        components: [
+          'position',
+          'rotation',
+        ]
+      });
+
+      function onConnect() {
+        console.log("connected to a room!");
+      }
+    </script>
+  </body>
+</html>

@@ -1,0 +1,199 @@
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,shrink-to-fit=no,user-scalable=no,maximum-scale=1,minimum-scale=1">
+    <title>Islands</title>
+    <meta name="description" content="Built with height map terrain from the original Viradu.com, donated by Michael McAnally Oct 12, 2019."></meta>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="gray-translucent" />
+<!-- A-frame component libraries -->
+    <script src="js/aframe-master.min.js"></script>
+    <script src="js/aframe-environment-component.js"></script>
+    <script src="js/aframe-extras.min.js"></script>
+    <script src="js/aframe-teleport-controls.min.js"></script>
+    <script src="js/aframe-text-geometry-component.min.js"></script>
+    <!-- extra stuff for later on... you can look them up on github  -->
+    <script src="js/aframe-alongpath-component.min.js"></script>
+    <script src="js/aframe-curve-component.min.js"></script>
+    <script src="js/aframe-mouse-cursor-component.min.js"></script>
+    <script src="js/aframe-multisrc-component.js"></script>
+    <script src="js/aframe-particle-system-component.min.js"></script>
+
+    <!-- Libs required for NAF (NAF needs to be globally accessible) -->
+    <script>window.NAF || document.write('<script src="js/networked-aframe.min.js">\x3C/script>')</script>
+    <script src="js/socket.io.min.js"></script>
+    <script src="js/easyrtc.js"></script>
+<!-- see a-frame scene below https://github.com/donmccurdy/aframe-inspector-plugin-recast
+    <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
+-->
+
+        <script type="text/javascript">
+
+
+      // Component to do on click.
+      AFRAME.registerComponent('click-listener', {
+        init: function () {
+
+            this.el.addEventListener('click', function (evt) {
+
+                // remove clicked object from view
+                this.setAttribute('visible', false);
+                //slower...
+                //document.getElementById('cube').setAttribute('visible', false);
+
+
+            });
+        }
+      });
+
+      function doSomethingElse() {
+        //window.location.href="https://rocketvirtual.com";
+        document.getElementById('sphere').setAttribute('color', 'purple');
+      }
+
+      //   audio problem (and it is...) https://stackoverflow.com/questions/47921013/play-sound-on-click-in-a-frame?answertab=active#tab-top
+      AFRAME.registerComponent('audiohandler', {
+        init:function() {
+            let playing = false;
+            let audio = document.querySelector("#playAudio");
+            this.el.addEventListener('click', () => {
+
+                if(!playing) {
+                    audio.play();
+                } else {
+                    audio.pause();
+                    audio.currentTime = 0;
+                }
+                playing = !playing;
+            });
+        }
+      })
+
+
+      function GoNode(nodeURL) {
+        window.location.href = "/" + nodeURL;
+      }
+
+  </script>
+
+
+  </head>
+  <body>
+    <button id="playButton" type="button">Play Music</button>
+    <!-- I like the sound of this fun, joyful Carnival Banna tune for game: this "Royalty Purchase" for 10,000 downloads -->
+    <audio id="playAudio" autoplay loop>
+<!--        <source src="https://rocketvirtual.com/webvr/mp3/Carnival_Banana.mp3" type="audio/mpeg">    -->
+    </audio>
+
+<!-- used for creating Navmesh... see javascript component above <a-scene inspector-plugin-recast>  https://github.com/donmccurdy/aframe-inspector-plugin-recast-->
+
+  <a-scene networked-scene="room: Islands; debug: true; adapter: wseasyrtc;" background="color: #FAFAFA"> 
+
+      <a-assets>
+        <img crossorigin="anonymous" id="VRnode_CPortal" src="img/Portal_Desert.png">
+        <img crossorigin="anonymous" id="grid" src="img/opaic_grid.png">
+
+        <a-asset-item crossorigin="anonymous" id="Islands" src="/assets/gltf/island200.glb"></a-asset-item>
+        <a-asset-item crossorigin="anonymous" id="Palm" src="/assets/gltf/palm.glb"></a-asset-item>
+        
+        <template id="avatar-template">
+          <a-entity></a-entity>
+        </template>
+        
+        <template id="head-template">
+          <a-entity class="cam" obj-model="obj: url(assets/head.obj); mtl: url(assets/head.mtl)"></a-entity>
+        </template>
+        
+        <template id="hand-template">
+          <a-entity class="leftController">
+            <a-box class="box" scale="0.1 0.1 0.1"></a-box>
+          </a-entity>
+        </template>
+      </a-assets>
+
+      <a-entity id="mouseCursor" cursor="rayOrigin: mouse"></a-entity>
+
+      <a-entity id="NodeName" position="18.354 5.436 3.061" rotation="-180.000 -8.704 -180.000" scale="2 2 2" text-geometry="value: Node - Islands.; opacity: .5; size: .175; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
+
+      <!-- nav-mesh  -->
+      <a-entity id="navmesh" gltf-model="/assets/gltf/navmesh_island200.gltf" position="0 -0.129 0" scale="1 1 1" visible="false" nav-mesh="" light="castShadow: true; recieveShadow: true"></a-entity> 
+
+      <!-- Basic movement, selection and teleport -->
+      <a-entity id="avatar" networked="template:#avatar-template;attachTemplateToLocal:false;"
+        movement-controls="constrainToNavMesh: true;" position="32.045 2.958 -19.244" rotation="0 74.439 0">
+        <a-entity class="cam" networked="template:#head-template;attachTemplateToLocal:false;" camera="active: true"
+          position="0 1.6 0" rotation="0 0 0" look-controls="pointerLockEnabled: true"></a-entity>
+        <a-entity class="leftController" networked="template:#leftController-template;attachTemplateToLocal:false;"
+          hand-controls="left" tracked-controls vive-controls="hand: left" oculus-touch-controls="hand: left"
+          windows-motion-controls="hand: left"
+          teleport-controls="cameraRig: #avatar; button: trigger; curveShootingSpeed: 11; collisionEntities: #navmesh-step;"
+          visible="true" scale="0.8 0.8 0.8"></a-entity>
+        <a-entity class="rightController" networked="template:#rightController-template;attachTemplateToLocal:false;"
+          hand-controls="right" tracked-controls vive-controls="hand: right" oculus-touch-controls="hand: right"
+          windows-motion-controls="hand: right" laser-controls
+          raycaster="showLine: true; far: 20; interval: 0; objects: .clickable, a-link;" line="color: lawngreen; opacity: 0.5"
+          visible="true" scale="0.8 0.8 0.8"></a-entity>
+      </a-entity>     
+
+      <!-- Island -->
+      <a-entity id="MP_Islands" gltf-model="#Islands" position="0 -2.713 0" scale="75 75 75"></a-entity>
+      
+      <a-entity id="Palm_Tree1" gltf-model="#Palm" position="17.897 2.328 -35.312" rotation="0 0 0" scale=".002 .002 .002"></a-entity>
+      <a-entity id="Palm_Tree2" gltf-model="#Palm" position="-15.474 2.595 -20.555" rotation="-3.741 111.923 9.209" scale=".002 .002 .002"></a-entity>
+      <a-entity id="Palm_Tree3" gltf-model="#Palm" position="-34.756 2.864 -35.312" rotation="-3.285 61.159 11.798" scale=".002 .002 .002"></a-entity>
+      <a-entity id="Palm_Tree4" gltf-model="#Palm" position="40.934 2.186 -35.312" rotation="0 14.838 0" scale=".002 .002 .002"></a-entity>
+      <a-entity id="Palm_Tree5" gltf-model="#Palm" position="7.389 2.256 -59.464" rotation="6.168 124.621 6.056" scale=".002 .002 .002"></a-entity>  
+      <a-entity id="Palm_Tree6" gltf-model="#Palm" position="42.106 1.964 -35.312" rotation="-5.650 103.097 22.937" scale=".002 .002 .002"></a-entity>
+      <a-entity id="Palm_Tree7" gltf-model="#Palm" position="-13.021 2.903 -18.189" rotation="0 -147.427 0" scale=".002 .002 .002"></a-entity>
+      <a-entity id="Palm_Tree8" gltf-model="#Palm" position="-30.438 2.313 -44.343" rotation="10.420 -146.811 6.747" scale=".002 .002 .002"></a-entity>
+
+      <!-- Ocean -->
+      <a-ocean position="0 1.308 0" scale="3 3 3" width="50" density="50" amplitude="0.0001" depth="50" opacity=".75" ocean="amplitude: 0; speed: 0.75; speedVariance: 1"></a-ocean>
+
+      <!-- Sky -->
+      <a-sky src="/img/pinksky.png" rotation="0 0 0"></a-sky> 
+
+      <!-- Lighting -->
+      <a-light type="ambient" position="0 51.099 0" color="white" light="type: hemisphere; intensity: 1.25; castShadow: true; distance: 50; shadowBias: 1; shadowCameraVisible: true; shadowRadius: 300"></a-light>
+
+      <a-link href="/VRnodeLabelC5.html" color="white" image="#VRnode_CPortal" visible="true" title="Desert" on="click" position="25.998 4.483 -31.356" rotation="-2.539 -175.846 0" scale="2 2 2" material="shader: portal; borderEnabled: 1; pano: #VRnode_CPortal; side: back"></a-link>
+
+    </a-scene>
+
+    <script>
+      /**
+       * NAF Setup
+       */
+      NAF.schemas.add({
+        template: '#avatar-template',
+        components: [
+          'position',
+          'rotation',
+        ]
+      });
+
+      NAF.schemas.add({
+        template: '#head-template',
+        components: [
+          'position',
+          'rotation',
+        ]
+      });
+
+      NAF.schemas.add({
+        template: '#hand-template',
+        components: [
+          'position',
+          'rotation',
+        ]
+      });
+
+      function onConnect() {
+        console.log("connected to a room!");
+      }
+    </script>
+  </body>
+</html>
