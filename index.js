@@ -58,7 +58,7 @@ easyrtc.listen(app, socketServer, null, function (err, rtcRef) {
 
 function run() {
     // Return HTML pages in public directory when path matches
-    app.use('/', express.static(path.join(__dirname, './public')));
+    app.use('/', express.static(path.join(__dirname, './public_html')));
 
     webServer.listen(PORT, HOST, () => {
         console.log(`app running on http://localhost:${PORT}`);
