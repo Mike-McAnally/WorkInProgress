@@ -1,7 +1,7 @@
 # WorkInProgress
 Virtual Construct Basic WebVR Node Network Structure "Mind Palace" project.
 
-https://www.youtube.com/watch?v=QrNP_QLdaRM&feature=youtu.be
+https://rocketvirtual.com/?q=content/work-progress-vr-ui-mind-palace-project
 
 # How to run
 1. Install NodeJS and NPM
@@ -10,7 +10,7 @@ https://www.youtube.com/watch?v=QrNP_QLdaRM&feature=youtu.be
 2. Install modules needed to run node server
    `npm install`
 
-3. Download files into a local Node dir 
+3. Download files into a local Node web dir 
 
 4. Run the node app
    `npm start`
