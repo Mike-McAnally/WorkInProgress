@@ -94,10 +94,10 @@
 
       <a-assets>
         <img crossorigin="anonymous" id="VRnode_CPortal" src="img/Portal_Desert.png">
-        <img crossorigin="anonymous" id="grid" src="img/opaic_grid.png">
 
-        <a-asset-item crossorigin="anonymous" id="Islands" src="/assets/gltf/island200.glb"></a-asset-item>
+        <a-asset-item crossorigin="anonymous" id="Islands" src="/assets/gltf/Islands.glb"></a-asset-item>
         <a-asset-item crossorigin="anonymous" id="Palm" src="/assets/gltf/palm.glb"></a-asset-item>
+        <a-asset-item id="Building" src="/assets/gltf/Test_building.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
         
         <template id="avatar-template">
           <a-entity></a-entity>
@@ -118,8 +118,8 @@
 
       <a-entity id="NodeName" position="18.354 5.436 3.061" rotation="-180.000 -8.704 -180.000" scale="2 2 2" text-geometry="value: Node - Islands.; opacity: .5; size: .175; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
 
-      <!-- nav-mesh  -->
-      <a-entity id="navmesh" gltf-model="/assets/gltf/navmesh_island200.gltf" position="0 -0.129 0" scale="1 1 1" visible="false" nav-mesh="" light="castShadow: true; recieveShadow: true"></a-entity> 
+      <!-- nav-mesh   -->
+      <a-entity id="navmesh" gltf-model="/assets/gltf/navmesh.gltf" position="0 -1.62 0" scale="" visible="false" nav-mesh=""></a-entity>
 
       <!-- Basic movement, selection and teleport -->
       <a-entity id="avatar" networked="template:#avatar-template;attachTemplateToLocal:false;"
@@ -139,27 +139,35 @@
       </a-entity>     
 
       <!-- Island -->
-      <a-entity id="MP_Islands" gltf-model="#Islands" position="0 -2.713 0" scale="75 75 75"></a-entity>
+      <a-entity id="Mind_Palace_Islands" gltf-model="#Islands" position="0 -2.713 0" scale="75 75 75" shadow="castShadow: true; recieveShadow: true;"></a-entity>
+
+      <a-entity id="Meeting_Structure" gltf-model="#Building" position="39.283 2.407 -33.634" rotation="0 175.726 0" scale="0.02 0.02 0.02"></a-entity> -->
       
-      <a-entity id="Palm_Tree1" gltf-model="#Palm" position="17.897 2.328 -35.312" rotation="0 0 0" scale=".002 .002 .002"></a-entity>
-      <a-entity id="Palm_Tree2" gltf-model="#Palm" position="-15.474 2.595 -20.555" rotation="-3.741 111.923 9.209" scale=".002 .002 .002"></a-entity>
-      <a-entity id="Palm_Tree3" gltf-model="#Palm" position="-34.756 2.864 -35.312" rotation="-3.285 61.159 11.798" scale=".002 .002 .002"></a-entity>
-      <a-entity id="Palm_Tree4" gltf-model="#Palm" position="40.934 2.186 -35.312" rotation="0 14.838 0" scale=".002 .002 .002"></a-entity>
-      <a-entity id="Palm_Tree5" gltf-model="#Palm" position="7.389 2.256 -59.464" rotation="6.168 124.621 6.056" scale=".002 .002 .002"></a-entity>  
-      <a-entity id="Palm_Tree6" gltf-model="#Palm" position="42.106 1.964 -35.312" rotation="-5.650 103.097 22.937" scale=".002 .002 .002"></a-entity>
-      <a-entity id="Palm_Tree7" gltf-model="#Palm" position="-13.021 2.903 -18.189" rotation="0 -147.427 0" scale=".002 .002 .002"></a-entity>
-      <a-entity id="Palm_Tree8" gltf-model="#Palm" position="-30.438 2.313 -44.343" rotation="10.420 -146.811 6.747" scale=".002 .002 .002"></a-entity>
+      <!-- Palm Trees  -->
+      <a-entity id="Palm_Tree1" gltf-model="#Palm" position="18.701 2.328 -22.152" rotation="0 0 0" scale=".002 .003 .002" shadow="castShadow: true;"></a-entity>
+      <a-entity id="Palm_Tree2" gltf-model="#Palm" position="-15.474 2.595 -20.555" rotation="-3.741 111.923 9.209" scale=".002 .003 .002" shadow="castShadow: true;"></a-entity>
+      <a-entity id="Palm_Tree3" gltf-model="#Palm" position="-34.756 2.864 -35.312" rotation="-3.285 61.159 11.798" scale=".002 .002 .002" shadow="castShadow: true;"></a-entity>
+      <a-entity id="Palm_Tree4" gltf-model="#Palm" position="35.161 2.186 -23.427" rotation="0 14.838 0" scale=".002 .003 .002" shadow="castShadow: true;"></a-entity>
+      <a-entity id="Palm_Tree5" gltf-model="#Palm" position="7.389 2.256 -59.464" rotation="6.168 124.621 6.056" scale=".002 .003 .002" shadow="castShadow: true;"></a-entity>  
+      <a-entity id="Palm_Tree6" gltf-model="#Palm" position="-13.021 2.903 -18.189" rotation="0 -147.427 0" scale=".002 .003 .002" shadow="castShadow: true;"></a-entity>
+      <a-entity id="Palm_Tree7" gltf-model="#Palm" position="-30.438 2.313 -44.343" rotation="10.420 -146.811 6.747" scale=".002 .002 .002" shadow="castShadow: true;"></a-entity>
 
       <!-- Ocean -->
-      <a-ocean position="0 1.308 0" scale="3 3 3" width="50" density="50" amplitude="0.0001" depth="50" opacity=".75" ocean="amplitude: 0; speed: 0.75; speedVariance: 1"></a-ocean>
+      <a-ocean position="0 1.308 0" scale="3 3 3" width="50" depth="50" opacity=".75" ocean="density: 45; amplitude: -0.1; speed: 0.75; speedVariance: 0.1"></a-ocean>
 
       <!-- Sky -->
       <a-sky src="/img/pinksky.png" rotation="0 0 0"></a-sky> 
 
-      <!-- Lighting -->
-      <a-light type="ambient" position="0 51.099 0" color="white" light="type: hemisphere; intensity: 1.45; castShadow: true; distance: 50; shadowBias: 1; shadowCameraVisible: true; shadowRadius: 300"></a-light>
+      <!-- Light 1 -->
+      <a-light type="ambient" position="-83.68534 30.81376 -20.81553" color="white" light="type: hemisphere; intensity: 0.25; castShadow: true; distance: 300; shadowBias: 1; shadowCameraVisible: true; shadowRadius: 300; decay: 5" visible=""></a-light>
 
-      <a-link href="/VRnodeLabelC5.html" color="white" image="#VRnode_CPortal" visible="true" title="Desert" on="click" position="25.998 4.483 -31.356" rotation="-2.539 -175.846 0" scale="2 2 2" material="shader: portal; borderEnabled: 1; pano: #VRnode_CPortal; side: back"></a-link>
+      <!-- Light 2 -->
+      <a-light type="ambient" position="55.21461 30.81376 -26.72374" color="white" light="type: hemisphere; intensity: 0.25" visible=""></a-light>
+
+      <!-- Shadow Camera -->
+      <a-entity class="environment" position="-48.69131 27.46768 -7.77003" light="intensity: 1.25; castShadow: true; shadowCameraLeft: -95; shadowCameraBottom: -20; shadowCameraRight: 95; shadowCameraTop: 20; shadowRadius: 50; shadowCameraFar: 100" visible=""></a-entity>
+
+      <a-link href="/VRnodeLabelC5.html" color="white" image="#VRnode_CPortal" visible="true" title="Desert" on="click" position="33.170 4.483 -45.321" rotation="-0.164 -23.914 0" scale="2 2 2" material="shader: portal; borderEnabled: 1; pano: #VRnode_CPortal; side: back"></a-link>
 
     </a-scene>
 
