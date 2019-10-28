@@ -1,0 +1,67 @@
+<html>
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta http-equiv="content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,shrink-to-fit=no,user-scalable=no,maximum-scale=1,minimum-scale=1">
+    <title>Islands</title>
+    <meta name="description" content="Built with height map terrain from the original Viradu.com, donated by Michael McAnally Oct 12, 2019."></meta>
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="gray-translucent" />
+<!-- A-frame component libraries -->
+    <script src="js/aframe-master.min.js"></script>
+    <script src="js/aframe-environment-component.js"></script>
+    <script src="js/aframe-extras.min.js"></script>
+
+
+
+
+<!-- see a-frame scene below https://github.com/donmccurdy/aframe-inspector-plugin-recast -->
+    <script src="https://recast-api.donmccurdy.com/aframe-inspector-plugin-recast.js"></script>
+
+
+
+
+
+  </head>
+  <body>
+
+
+<!-- used for creating Navmesh... see javascript component above   https://github.com/donmccurdy/aframe-inspector-plugin-recast-->
+
+  <a-scene inspector-plugin-recast> 
+
+      <a-assets>
+        <a-asset-item id="Building" src="/assets/gltf/PlanRm1.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
+
+        <a-asset-item crossorigin="anonymous" id="Islands" src="/assets/gltf/Islands.glb"></a-asset-item>
+
+        
+
+      </a-assets>
+
+
+
+
+      <a-entity id="Meeting_Structure" gltf-model="#Building" position="44.698 2.407 -25.119" rotation="0 163.797 0" scale="0.02 0.02 0.02" shadow></a-entity>
+
+
+    
+
+      <!-- Island -->
+      <a-entity id="Mind_Palace_Islands2" gltf-model="#Islands" position="0 -2.713 0" scale="75 75 75" shadow="castShadow: true; recieveShadow: true;"></a-entity>
+
+      
+
+
+
+
+
+
+
+
+    </a-scene>
+
+  </body>
+</html>
