@@ -82,7 +82,7 @@
 
       <a-assets>
         <img crossorigin="anonymous" id="VRnode_APortal" src="img/Portal_Beach.png">
-
+        <img crossorigin="anonymous" src="img/play2.png" id="play" >
         <a-asset-item crossorigin="anonymous" id="Islands" src="/assets/gltf/Islands.glb"></a-asset-item>
         <a-asset-item crossorigin="anonymous" id="Palm" src="/assets/gltf/palm.glb"></a-asset-item>
         <a-asset-item id="Building" src="/assets/gltf/ThinWallRmFinal.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
@@ -120,7 +120,7 @@
       <a-entity id="avatar" networked="template:#avatar-template;attachTemplateToLocal:false;"
         movement-controls="constrainToNavMesh: true;" position="32.045 2.958 -19.244" rotation="0 74.439 0">
         <a-entity class="cam" networked="template:#head-template;attachTemplateToLocal:false;" camera="active: true"
-          position="0 1.6 0" rotation="0 0 0" look-controls="pointerLockEnabled: true"></a-entity>
+          position="0 1.6 0" rotation="0 0 0" look-controls></a-entity>
         <a-entity class="leftController" networked="template:#leftController-template;attachTemplateToLocal:false;"
           hand-controls="left" tracked-controls vive-controls="hand: left" oculus-touch-controls="hand: left"
           windows-motion-controls="hand: left"
@@ -155,6 +155,36 @@
       <a-entity id="Shelf3" gltf-model="#Shelf3" position="29.432 2.408 -22.818" rotation="0 -20.376 0" scale="0.003 0.003 0.003" shadow visible=""></a-entity>
 
       
+      <!-- PDF reader component -->
+      <a-entity
+        id="pdf-wrapper"
+        position="32.010 3.952 -21.528"
+        rotation="0 -14.790 0"
+      >
+        <!-- back arrow -->
+        <a-image
+          class="clickable"
+          id="prev-page"
+          width="0.15"
+          height="0.15"
+          src="#play"
+          position="-0.3 0 0.01"
+          rotation="0 0 180"
+          material="color: #eee"
+        ></a-image>
+
+        <!-- forward arrow -->
+        <a-image
+          id="next-page"
+          class="clickable"
+          width="0.15"
+          height="0.15"
+          src="#play"
+          position="0.3 0 0.01"
+          material="color: #eee"
+        ></a-image>
+      </a-entity>
+
       <!-- Palm Trees  -->
       <a-entity id="Palm_Tree1" gltf-model="#Palm" position="18.701 2.328 -41.067" rotation="0 0 0" scale=".002 .003 .002" shadow></a-entity>
       <a-entity id="Palm_Tree2" gltf-model="#Palm" position="-15.474 2.595 -20.555" rotation="-3.741 111.923 9.209" scale=".002 .003 .002" shadow></a-entity>
@@ -213,6 +243,51 @@
       function onConnect() {
         console.log("connected to a room!");
       }
+
+      // PDF controls
+      const fileName = 'vr_dev';
+      const pdfWrapperEl = document.querySelector('#pdf-wrapper');
+      let curPage = 1;
+
+      function getPage(page) {
+          const fetchPromise = fetch(`/${fileName}.pdf/${page}`);
+          fetchPromise.then(response => {
+          return response.json();
+          }).then(data => {
+              if(data.path && data.path.length > 0) {
+                  const prevPdf = document.querySelector(`#${fileName}_PDF`);
+                  if (prevPdf) {
+                      prevPdf.parentNode.removeChild(prevPdf);
+                  }
+
+                  const pdfEl = document.createElement('a-entity');
+                  pdfEl.id = `${fileName}_PDF`;
+                  pdfEl.setAttribute('geometry', 'primitive: plane; width: 0.42; height: 0.594')
+                  pdfEl.setAttribute('material', `color: #fff; side: double; src: ${data.path}`)
+                  pdfWrapperEl.appendChild(pdfEl);
+              }
+          });
+      }
+
+      async function getNextPage() {
+          await getPage(++curPage);
+      }
+      
+      async function getPrevPage() {
+          await getPage(--curPage);
+      }
+
+      // Add event listeners for buttons
+      document.querySelector('#prev-page').addEventListener('click', function () {
+          getPrevPage();
+      });
+
+      document.querySelector('#next-page').addEventListener('click', function () {
+          getNextPage();
+      });
+
+      // start from page 0
+      getPage(curPage);
     </script>
   </body>
 </html>

@@ -3,6 +3,10 @@ const express = require('express');
 const path = require('path');
 const app = express();
 
+const fs = require('fs');
+const schedule = require('node-schedule');
+const PDF2Pic = require("pdf2pic");
+
 app.use(express.json());
 
 // Modify listening port value if needed
@@ -55,6 +59,49 @@ easyrtc.listen(app, socketServer, null, function (err, rtcRef) {
         appObj.events.defaultListeners.roomCreate(appObj, creatorConnectionObj, roomName, roomOptions, callback);
     });
 });
+
+app.get(/(.*\.pdf)\/([0-9]+)$/i, async function (req, res) {
+    const pdfPath = path.join(__dirname, `./public_html/assets/pdf/${req.params[0]}`);
+    const pageNumber = req.params[1];
+
+    const pdf2pic = new PDF2Pic({
+        density: 100,
+        savename: `${req.params[0]}-${pageNumber}`,
+        savedir: "./public_html/assets/tmp", 
+        format: "png",   
+        size: "1190x1684"
+    });
+    
+    pdf2pic.convert(pdfPath, pageNumber).then(file => {
+        if (!file.name) {
+            res.status(500).send('Could not convert file');
+            return;
+        }
+
+        const response = {
+            path: `/assets/tmp/${file.name}`
+        }
+
+        // deletes file created after 24 hours
+        scheduleJob(86400000, deleteFileIfExists, path.join(__dirname, `./public_html/assets/tmp/${file.name}`));
+        res.send(response);
+    })
+});
+
+function scheduleJob(time, callback, args) {
+    const startTime = new Date(Date.now() + time);
+    schedule.scheduleJob(startTime, function() {
+        callback(args);
+    });
+}
+
+function deleteFileIfExists(path) {
+    if(fs.existsSync(path)) {
+        console.log('Deleting file in path:')
+        console.log(path);
+        fs.unlinkSync(path);
+    }
+}
 
 function run() {
     // Return HTML pages in public directory when path matches
