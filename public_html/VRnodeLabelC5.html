@@ -33,7 +33,7 @@
 
   </head>
   <body>
-    <a-scene networked-scene="room: C5; debug: true; adapter: wseasyrtc; audio: true;" background="color: #FAFAFA">
+    <a-scene networked-scene="room: C5; debug: true; adapter: easyrtc; audio: true;" background="color: #FAFAFA">
       <a-assets>
             <img crossorigin="anonymous" src="img/play2.png" id="play" >
             <img crossorigin="anonymous" id="VRnode_DPortal" src="img/Portal_Park.png">
@@ -88,25 +88,25 @@
     >
         <!-- back arrow -->
         <a-image
-            class="clickable"
-            id="prev-page"
-            width="0.15"
-            height="0.15"
-            src="#play"
-            position="-0.3 0 0.01"
-            rotation="0 0 180"
-            material="color: #eee"
+          class="clickable"
+          id="prev-page"
+          width="0.15"
+          height="0.15"
+          src="#play"
+          position="-0.3 0 0.01"
+          rotation="0 0 180"
+          material="color: #eee"
         ></a-image>
 
         <!-- forward arrow -->
         <a-image
-            id="next-page"
-            class="clickable"
-            width="0.15"
-            height="0.15"
-            src="#play"
-            position="0.3 0 0.01"
-            material="color: #eee"
+          id="next-page"
+          class="clickable"
+          width="0.15"
+          height="0.15"
+          src="#play"
+          position="0.3 0 0.01"
+          material="color: #eee"
         ></a-image>
     </a-entity>
 
@@ -246,36 +246,45 @@
         }
 
         // PDF controls
-        const fileName = 'vr_dev';
+        const fileName = 'ydkjs';
         const pdfWrapperEl = document.querySelector('#pdf-wrapper');
-        let curPage = 1;
+        if (!window.localStorage.getItem('currentPage')) {
+            window.localStorage.setItem('currentPage', 1);
+        }
 
-        function getPage(page) {
-            const fetchPromise = fetch(`/${fileName}.pdf/${page}`);
-            fetchPromise.then(response => {
-            return response.json();
-            }).then(data => {
-                if(data.path && data.path.length > 0) {
+        async function getPage() {
+            try {
+                const page = window.localStorage.getItem('currentPage');
+                const response = await fetch(`/${fileName}.pdf/${page}`);
+                const data = await response.json();
+    
+                if (data && data.path && data.path.length > 0) {
                     const prevPdf = document.querySelector(`#${fileName}_PDF`);
                     if (prevPdf) {
                         prevPdf.parentNode.removeChild(prevPdf);
                     }
-
+    
                     const pdfEl = document.createElement('a-entity');
                     pdfEl.id = `${fileName}_PDF`;
                     pdfEl.setAttribute('geometry', 'primitive: plane; width: 0.42; height: 0.594')
                     pdfEl.setAttribute('material', `color: #fff; side: double; src: ${data.path}`)
                     pdfWrapperEl.appendChild(pdfEl);
                 }
-            });
+            } catch (e) {
+                console.log(e)
+            }
         }
 
         async function getNextPage() {
-            await getPage(++curPage);
+            let page = window.localStorage.getItem('currentPage');
+            window.localStorage.setItem('currentPage', ++page)
+            await getPage();
         }
-        
+
         async function getPrevPage() {
-            await getPage(--curPage);
+            let page = window.localStorage.getItem('currentPage');
+            window.localStorage.setItem('currentPage', --page)
+            await getPage();
         }
 
         // Add event listeners for buttons
@@ -288,7 +297,7 @@
         });
 
         // start from page 0
-        getPage(curPage);
+        getPage();
     </script>
   </body>
 </html>        

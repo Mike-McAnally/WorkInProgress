@@ -61,31 +61,35 @@ easyrtc.listen(app, socketServer, null, function (err, rtcRef) {
 });
 
 app.get(/(.*\.pdf)\/([0-9]+)$/i, async function (req, res) {
-    const pdfPath = path.join(__dirname, `./public_html/assets/pdf/${req.params[0]}`);
-    const pageNumber = req.params[1];
-
-    const pdf2pic = new PDF2Pic({
-        density: 100,
-        savename: `${req.params[0]}-${pageNumber}`,
-        savedir: "./public_html/assets/tmp", 
-        format: "png",   
-        size: "1190x1684"
-    });
+    try {
+        const pdfPath = path.join(__dirname, `./public_html/assets/pdf/${req.params[0]}`);
+        const pageNumber = req.params[1];
     
-    pdf2pic.convert(pdfPath, pageNumber).then(file => {
+        const pdf2pic = new PDF2Pic({
+            density: 100,
+            savename: `${req.params[0]}-${pageNumber}`,
+            savedir: "./public_html/assets/tmp", 
+            format: "png",   
+            size: "1190x1684"
+        });
+        
+        const file = await pdf2pic.convert(pdfPath, pageNumber)
         if (!file.name) {
             res.status(500).send('Could not convert file');
             return;
         }
-
+        
         const response = {
-            path: `/assets/tmp/${file.name}`
+            path: `/assets/assets/tmp/${file.name}`
         }
 
         // deletes file created after 24 hours
         scheduleJob(86400000, deleteFileIfExists, path.join(__dirname, `./public_html/assets/tmp/${file.name}`));
         res.send(response);
-    })
+    } catch(e) {
+        console.log(e);
+        res.status(500).send('Could not convert file');
+    }
 });
 
 function scheduleJob(time, callback, args) {
@@ -105,7 +109,7 @@ function deleteFileIfExists(path) {
 
 function run() {
     // Return HTML pages in public directory when path matches
-    app.use('/', express.static(path.join(__dirname, './public_html')));
+    app.use('/assets/', express.static(path.join(__dirname, './public_html')));
 
     webServer.listen(PORT, HOST, () => {
         console.log(`app running on http://localhost:${PORT}`);
