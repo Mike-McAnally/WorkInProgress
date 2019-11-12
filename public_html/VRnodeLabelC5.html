@@ -23,6 +23,9 @@
     <script src="js/aframe-multisrc-component.js"></script>
     <script src="js/aframe-particle-system-component.min.js"></script>
 
+    <!-- Self-made components -->
+    <script src="components/pdf.js"></script>
+
     <!-- Libs required for NAF (NAF needs to be globally accessible) -->
     <script>window.NAF || document.write('<script src="js/networked-aframe.min.js">\x3C/script>')</script>
     <script src="js/socket.io.min.js"></script>
@@ -35,7 +38,8 @@
   <body>
     <a-scene id="main-scene" networked-scene="room: C5; debug: true; adapter: wseasyrtc; audio: true;" background="color: #FAFAFA">
         <a-assets>
-            <img crossorigin="anonymous" src="img/play2.png" id="play" >
+            <img crossorigin="anonymous" src="img/play_icon.png" id="play" >
+            <img crossorigin="anonymous" src="img/cog_icon.png" id="cog" >
             <img crossorigin="anonymous" id="VRnode_DPortal" src="img/Portal_Park.png">
 
             <a-asset-item id="marbleFountain" src="assets/scene.gltf"></a-asset-item>
@@ -84,32 +88,10 @@
         <!-- PDF reader component -->
         <a-entity
             id="pdf-wrapper"
-            position="0 2 1"
+            position="0 1.6 1"
             rotation="4 0 0"
-        >
-            <!-- back arrow -->
-            <a-image
-            class="clickable"
-            id="prev-page"
-            width="0.15"
-            height="0.15"
-            src="#play"
-            position="-0.3 0 0.01"
-            rotation="0 0 180"
-            material="color: #eee"
-            ></a-image>
-
-            <!-- forward arrow -->
-            <a-image
-            id="next-page"
-            class="clickable"
-            width="0.15"
-            height="0.15"
-            src="#play"
-            position="0.3 0 0.01"
-            material="color: #eee"
-            ></a-image>
-        </a-entity>
+            pdf-reader="fileName: vr_dev; flipIconSrc: #play; settingsIconSrc: #cog"
+        ></a-entity>
 
         <!-- Robot template -->
         <a-entity id="robot-rig" position="0 1.05 -0.5">
@@ -244,72 +226,6 @@
         function onConnect() {
             console.log("connected to a room!");
         }
-
-        // PDF controls
-        const fileName = 'vr_dev';
-        const pdfWrapperEl = document.querySelector('#pdf-wrapper');
-        if (parseInt(window.localStorage.getItem('currentPage')) < 1) {
-            window.localStorage.setItem('currentPage', 1);
-        }
-
-        async function fetchFile() {
-            try {
-                const page = window.localStorage.getItem('currentPage');
-                const response = await fetch(`/${fileName}.pdf/${page}`);
-                const data = await response.json();
-                
-                if (data && data.pages) {
-                    window.localStorage.setItem('totalPages', data.files.length)
-                    window.localStorage.setItem('PdfBasePath', `/assets/tmp/${fileName}/`)
-                    renderPage(parseInt(window.localStorage.getItem('currentPage')))
-                }
-            } catch (e) {
-                console.log(e)
-            }
-        }
-
-        function renderPage(page) {
-            const prevPdf = document.querySelector(`#${fileName}_PDF`);
-            if (prevPdf) {
-                prevPdf.parentNode.removeChild(prevPdf);
-            }
-            const pdfEl = document.createElement('a-entity');
-            const basePath = window.localStorage.getItem('PdfBasePath');
-            pdfEl.id = `${fileName}_PDF`;
-            pdfEl.setAttribute('geometry', 'primitive: plane; width: 0.42; height: 0.594')
-            pdfEl.setAttribute('material', `color: #fff; side: double; src: ${basePath}/${fileName}_${page}.png`)
-            pdfWrapperEl.appendChild(pdfEl);
-
-            window.localStorage.setItem('currentPage', page);
-        }
-
-        async function getNextPage() {
-            const page = parseInt(window.localStorage.getItem('currentPage'));
-            const totalPages = parseInt(window.localStorage.getItem('totalPages'));
-            if (page < totalPages) {
-                const newPage = page + 1;
-                renderPage(newPage)
-            }
-        }
-
-        async function getPrevPage() {
-            const page = parseInt(window.localStorage.getItem('currentPage'));
-            if (page > 1) {
-                const newPage = page - 1;
-                renderPage(newPage)
-            }
-        }
-
-        // Add event listeners for buttons
-        document.querySelector('#prev-page').addEventListener('click', function () {
-            getPrevPage();
-        });
-
-        document.querySelector('#next-page').addEventListener('click', function () {
-            getNextPage();
-        });
-
-        fetchFile();
     </script>
   </body>
 </html>        
