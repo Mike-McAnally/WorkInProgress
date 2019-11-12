@@ -1,4 +1,4 @@
-<!DOCTYPE>
+<!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,7 +10,7 @@
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="gray-translucent" />
-<!-- A-frame component libraries -->
+    <!-- A-frame component libraries -->
     <script src="js/aframe-master.min.js"></script>
     <script src="js/aframe-environment-component.js"></script>
     <script src="js/aframe-extras.min.js"></script>
@@ -33,8 +33,8 @@
 
   </head>
   <body>
-    <a-scene networked-scene="room: C5; debug: true; adapter: easyrtc; audio: true;" background="color: #FAFAFA">
-      <a-assets>
+    <a-scene id="main-scene" networked-scene="room: C5; debug: true; adapter: wseasyrtc; audio: true;" background="color: #FAFAFA">
+        <a-assets>
             <img crossorigin="anonymous" src="img/play2.png" id="play" >
             <img crossorigin="anonymous" id="VRnode_DPortal" src="img/Portal_Park.png">
 
@@ -53,12 +53,12 @@
                     <a-box class="box" scale="0.1 0.1 0.1"></a-box>
                 </a-entity>
             </template>
-      </a-assets>
+        </a-assets>
 
-      <a-entity environment="preset:yavapai;skyType:gradient;skyColor:#33A4F4;ground:canyon;groundTexture:walkernoise;grid:1x1;gridColor:#F4DAA3;lightPosition:0 1 -0.2;"></a-entity>
-      <a-entity id="NodeName" position="-2 0.058 -1.75475" text-geometry="value: Node - Desert.; opacity: .5; size: .175; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
+        <a-entity environment="preset:yavapai;skyType:gradient;skyColor:#33A4F4;ground:canyon;groundTexture:walkernoise;grid:1x1;gridColor:#F4DAA3;lightPosition:0 1 -0.2;"></a-entity>
+        <a-entity id="NodeName" position="-2 0.058 -1.75475" text-geometry="value: Node - Desert.; opacity: .5; size: .175; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
 
-      <!-- Basic movement, selection and teleport  -->
+        <!-- Basic movement, selection and teleport  -->
         <a-entity id="avatar" networked="template:#avatar-template;attachTemplateToLocal:false;"
             movement-controls="constrainToNavMesh: true;" position="0 0 3">
             <a-entity class="cam" networked="template:#head-template;attachTemplateToLocal:false;" camera="active: true"
@@ -81,140 +81,140 @@
             ></a-entity>
         </a-entity>
 
-    <!-- PDF reader component -->
-    <a-entity
-        id="pdf-wrapper"
-        position="0 1.6 1"
-    >
-        <!-- back arrow -->
-        <a-image
-          class="clickable"
-          id="prev-page"
-          width="0.15"
-          height="0.15"
-          src="#play"
-          position="-0.3 0 0.01"
-          rotation="0 0 180"
-          material="color: #eee"
-        ></a-image>
-
-        <!-- forward arrow -->
-        <a-image
-          id="next-page"
-          class="clickable"
-          width="0.15"
-          height="0.15"
-          src="#play"
-          position="0.3 0 0.01"
-          material="color: #eee"
-        ></a-image>
-    </a-entity>
-
-    <!-- Robot template -->
-    <a-entity id="robot-rig" position="0 1.05 -0.5">
+        <!-- PDF reader component -->
         <a-entity
-            class="head"
-            geometry="primitive: box; width: 0.4; height: 0.3; depth: 0.13"
-            material="color: #EDE7F6"
+            id="pdf-wrapper"
+            position="0 2 1"
+            rotation="4 0 0"
         >
-            <!-- Antenna -->
+            <!-- back arrow -->
+            <a-image
+            class="clickable"
+            id="prev-page"
+            width="0.15"
+            height="0.15"
+            src="#play"
+            position="-0.3 0 0.01"
+            rotation="0 0 180"
+            material="color: #eee"
+            ></a-image>
+
+            <!-- forward arrow -->
+            <a-image
+            id="next-page"
+            class="clickable"
+            width="0.15"
+            height="0.15"
+            src="#play"
+            position="0.3 0 0.01"
+            material="color: #eee"
+            ></a-image>
+        </a-entity>
+
+        <!-- Robot template -->
+        <a-entity id="robot-rig" position="0 1.05 -0.5">
             <a-entity
-                class="antenna"
-                position="0 0.2 0"
-                geometry="primitive: cylinder; height: 0.25; radius: 0.01"
+                class="head"
+                geometry="primitive: box; width: 0.4; height: 0.3; depth: 0.13"
+                material="color: #EDE7F6"
+            >
+                <!-- Antenna -->
+                <a-entity
+                    class="antenna"
+                    position="0 0.2 0"
+                    geometry="primitive: cylinder; height: 0.25; radius: 0.01"
+                    material="color: #7E57C2"
+                >
+                    <a-entity
+                        class="antenna-tip"
+                        position="0 0.13 0"
+                        geometry="primitive: sphere; radius: 0.019"
+                        material="color: #FFEB3B"
+                    ></a-entity>
+                </a-entity>
+
+                <!-- Eyes -->
+                <a-entity
+                    class="leftEye"
+                    position="0.09 0.05 0.05"
+                    rotation="90 0 0"
+                    geometry="primitive: cylinder; height: 0.05; radius: 0.05"
+                    material="color: #7E57C2"
+                ></a-entity>
+                <a-entity
+                    class="rightEye"
+                    position="-0.09 0.05 0.05"
+                    rotation="90 0 0"
+                    geometry="primitive: cylinder; height: 0.05; radius: 0.05"
+                    material="color: #7E57C2"
+                ></a-entity>
+                <!-- Mouth -->
+                <a-entity
+                    class="mouth"
+                    position="0 -0.07 0.05"
+                    geometry="primitive: box; height: 0.05; width: 0.09; depth: 0.05"
+                    material="color: #9575CD"
+                ></a-entity>
+            </a-entity>
+            <!-- Neck -->
+            <a-entity
+                class="neck"
+                position="0 -0.2 0"
+                geometry="primitive: cylinder; height: 0.1; radius: 0.05"
                 material="color: #7E57C2"
             >
+            </a-entity> 
+
+            <!-- Body -->
+            <a-entity
+                class="body"
+                position="0 -0.55 0"
+                geometry="primitive: box; width: 0.6; height: 0.6; depth: 0.35"
+                material="color: #EDE7F6"
+            >
                 <a-entity
-                    class="antenna-tip"
-                    position="0 0.13 0"
-                    geometry="primitive: sphere; radius: 0.019"
-                    material="color: #FFEB3B"
+                    class="body-detail1"
+                    position="0 0 0.01"
+                    geometry="primitive: box; width: 0.45; height: 0.45; depth: 0.35"
+                    material="color: #B39DDB"
+                ></a-entity>
+                <a-entity
+                    class="body-detail2"
+                    position="0.12 0 0.185"
+                    geometry="primitive: sphere; radius: 0.02;"
+                    material="color: #7E57C2"
                 ></a-entity>
             </a-entity>
 
-            <!-- Eyes -->
+            <!-- Wheels -->
             <a-entity
-                class="leftEye"
-                position="0.09 0.05 0.05"
-                rotation="90 0 0"
-                geometry="primitive: cylinder; height: 0.05; radius: 0.05"
+                class="leftWheel"
+                position="-0.15 -0.95 0"
+                rotation="0 90 0"
+                geometry="primitive: torus; radius: 0.05; radiusTubular: 0.02"
                 material="color: #7E57C2"
-            ></a-entity>
+            >
+            </a-entity>
             <a-entity
-                class="rightEye"
-                position="-0.09 0.05 0.05"
-                rotation="90 0 0"
-                geometry="primitive: cylinder; height: 0.05; radius: 0.05"
+                class="rightWheel"
+                position="0.15 -0.95 0"
+                rotation="0 90 0"
+                geometry="primitive: torus; radius: 0.05; radiusTubular: 0.02"
                 material="color: #7E57C2"
-            ></a-entity>
-            <!-- Mouth -->
-            <a-entity
-                class="mouth"
-                position="0 -0.07 0.05"
-                geometry="primitive: box; height: 0.05; width: 0.09; depth: 0.05"
-                material="color: #9575CD"
-            ></a-entity>
+            >
+            </a-entity>
         </a-entity>
-        <!-- Neck -->
-        <a-entity
-            class="neck"
-            position="0 -0.2 0"
-            geometry="primitive: cylinder; height: 0.1; radius: 0.05"
-            material="color: #7E57C2"
-        >
-        </a-entity> 
+        <!-- Marble Fountain from SketchFab https://sketchfab.com/3d-models/fountain-2e9061fb2e974bf796a8c9c8ffb0cc98  -->
+        <a-entity id="marbleWaterFountain" gltf-model="#marbleFountain" scale="0.75 0.75 0.75" position="0 -0.25283 -4.495" ></a-entity>
 
-        <!-- Body -->
-        <a-entity
-            class="body"
-            position="0 -0.55 0"
-            geometry="primitive: box; width: 0.6; height: 0.6; depth: 0.35"
-            material="color: #EDE7F6"
-        >
-            <a-entity
-                class="body-detail1"
-                position="0 0 0.01"
-                geometry="primitive: box; width: 0.45; height: 0.45; depth: 0.35"
-                material="color: #B39DDB"
-            ></a-entity>
-            <a-entity
-                class="body-detail2"
-                position="0.12 0 0.185"
-                geometry="primitive: sphere; radius: 0.02;"
-                material="color: #7E57C2"
-            ></a-entity>
-        </a-entity>
+        <!-- Modified water for fountain  -->
+        <a-entity id="waterFountain" position="0 1.559 -4.495" scale="0.75 0.75 0.75" particle-system="color:#000, #FFF;velocitySpread:15 13.75 15;velocityValue:0 12 0;accelerationSpread:1 0 1;particleCount:175;maxAge:10.5;texture: url(/img/dot2.png)"></a-entity>
 
-        <!-- Wheels -->
-        <a-entity
-            class="leftWheel"
-            position="-0.15 -0.95 0"
-            rotation="0 90 0"
-            geometry="primitive: torus; radius: 0.05; radiusTubular: 0.02"
-            material="color: #7E57C2"
-        >
-        </a-entity>
-        <a-entity
-            class="rightWheel"
-            position="0.15 -0.95 0"
-            rotation="0 90 0"
-            geometry="primitive: torus; radius: 0.05; radiusTubular: 0.02"
-            material="color: #7E57C2"
-        >
-        </a-entity>
-    </a-entity>
-      <!-- Marble Fountain from SketchFab https://sketchfab.com/3d-models/fountain-2e9061fb2e974bf796a8c9c8ffb0cc98  -->
-      <a-entity id="marbleWaterFountain" gltf-model="#marbleFountain" scale="0.75 0.75 0.75" position="0 -0.25283 -4.495" ></a-entity>
-
-      <!-- Modified water for fountain  -->
-      <a-entity id="waterFountain" position="0 1.559 -4.495" scale="0.75 0.75 0.75" particle-system="color:#000, #FFF;velocitySpread:15 13.75 15;velocityValue:0 12 0;accelerationSpread:1 0 1;particleCount:175;maxAge:10.5;texture: url(/img/dot2.png)"></a-entity>
-
-      <a-link href="/VRnodeLabelD5.html" color="white" image="#VRnode_DPortal" visible="true" title="Park" on="click" position="-16.547 2.229 0.690" rotation="0 -92.2 0" scale="2 2 2" material="shader: portal; borderEnabled: 1; pano: #VRnode_DPortal; side: back"></a-link>
-
+        <a-link href="/VRnodeLabelD5.html" color="white" image="#VRnode_DPortal" visible="true" title="Park" on="click" position="-16.547 2.229 0.690" rotation="0 -92.2 0" scale="2 2 2" material="shader: portal; borderEnabled: 1; pano: #VRnode_DPortal; side: back"></a-link>
     </a-scene>
 
     <script>
-        /**
+        /*
          * NAF Setup
          */
         NAF.schemas.add({
@@ -246,45 +246,58 @@
         }
 
         // PDF controls
-        const fileName = 'ydkjs';
+        const fileName = 'vr_dev';
         const pdfWrapperEl = document.querySelector('#pdf-wrapper');
-        if (!window.localStorage.getItem('currentPage')) {
+        if (parseInt(window.localStorage.getItem('currentPage')) < 1) {
             window.localStorage.setItem('currentPage', 1);
         }
 
-        async function getPage() {
+        async function fetchFile() {
             try {
                 const page = window.localStorage.getItem('currentPage');
                 const response = await fetch(`/${fileName}.pdf/${page}`);
                 const data = await response.json();
-    
-                if (data && data.path && data.path.length > 0) {
-                    const prevPdf = document.querySelector(`#${fileName}_PDF`);
-                    if (prevPdf) {
-                        prevPdf.parentNode.removeChild(prevPdf);
-                    }
-    
-                    const pdfEl = document.createElement('a-entity');
-                    pdfEl.id = `${fileName}_PDF`;
-                    pdfEl.setAttribute('geometry', 'primitive: plane; width: 0.42; height: 0.594')
-                    pdfEl.setAttribute('material', `color: #fff; side: double; src: ${data.path}`)
-                    pdfWrapperEl.appendChild(pdfEl);
+                
+                if (data && data.pages) {
+                    window.localStorage.setItem('totalPages', data.files.length)
+                    window.localStorage.setItem('PdfBasePath', `/assets/tmp/${fileName}/`)
+                    renderPage(parseInt(window.localStorage.getItem('currentPage')))
                 }
             } catch (e) {
                 console.log(e)
             }
         }
 
+        function renderPage(page) {
+            const prevPdf = document.querySelector(`#${fileName}_PDF`);
+            if (prevPdf) {
+                prevPdf.parentNode.removeChild(prevPdf);
+            }
+            const pdfEl = document.createElement('a-entity');
+            const basePath = window.localStorage.getItem('PdfBasePath');
+            pdfEl.id = `${fileName}_PDF`;
+            pdfEl.setAttribute('geometry', 'primitive: plane; width: 0.42; height: 0.594')
+            pdfEl.setAttribute('material', `color: #fff; side: double; src: ${basePath}/${fileName}_${page}.png`)
+            pdfWrapperEl.appendChild(pdfEl);
+
+            window.localStorage.setItem('currentPage', page);
+        }
+
         async function getNextPage() {
-            let page = window.localStorage.getItem('currentPage');
-            window.localStorage.setItem('currentPage', ++page)
-            await getPage();
+            const page = parseInt(window.localStorage.getItem('currentPage'));
+            const totalPages = parseInt(window.localStorage.getItem('totalPages'));
+            if (page < totalPages) {
+                const newPage = page + 1;
+                renderPage(newPage)
+            }
         }
 
         async function getPrevPage() {
-            let page = window.localStorage.getItem('currentPage');
-            window.localStorage.setItem('currentPage', --page)
-            await getPage();
+            const page = parseInt(window.localStorage.getItem('currentPage'));
+            if (page > 1) {
+                const newPage = page - 1;
+                renderPage(newPage)
+            }
         }
 
         // Add event listeners for buttons
@@ -296,8 +309,7 @@
             getNextPage();
         });
 
-        // start from page 0
-        getPage();
+        fetchFile();
     </script>
   </body>
 </html>        

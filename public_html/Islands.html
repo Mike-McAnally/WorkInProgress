@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
   <head>
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -99,7 +100,7 @@
         </template>
         
         <template id="head-template">
-          <a-entity class="cam" obj-model="obj: url(assets/head.obj); mtl: url(assets/head.mtl)"></a-entity>
+          <a-entity networked-audio-source class="cam" obj-model="obj: url(assets/head.obj); mtl: url(assets/head.mtl)"></a-entity>
         </template>
         
         <template id="hand-template">
@@ -246,48 +247,69 @@
 
       // PDF controls
       const fileName = 'vr_dev';
-      const pdfWrapperEl = document.querySelector('#pdf-wrapper');
-      let curPage = 1;
+        const pdfWrapperEl = document.querySelector('#pdf-wrapper');
+        if (parseInt(window.localStorage.getItem('currentPage')) < 1) {
+            window.localStorage.setItem('currentPage', 1);
+        }
 
-      function getPage(page) {
-          const fetchPromise = fetch(`/${fileName}.pdf/${page}`);
-          fetchPromise.then(response => {
-          return response.json();
-          }).then(data => {
-              if(data.path && data.path.length > 0) {
-                  const prevPdf = document.querySelector(`#${fileName}_PDF`);
-                  if (prevPdf) {
-                      prevPdf.parentNode.removeChild(prevPdf);
-                  }
+        async function fetchFile() {
+            try {
+                const page = window.localStorage.getItem('currentPage');
+                const response = await fetch(`/${fileName}.pdf/${page}`);
+                const data = await response.json();
+                
+                if (data && data.pages) {
+                    window.localStorage.setItem('totalPages', data.files.length)
+                    window.localStorage.setItem('PdfBasePath', `/assets/tmp/${fileName}/`)
+                    renderPage(parseInt(window.localStorage.getItem('currentPage')))
+                }
+            } catch (e) {
+                console.log(e)
+            }
+        }
 
-                  const pdfEl = document.createElement('a-entity');
-                  pdfEl.id = `${fileName}_PDF`;
-                  pdfEl.setAttribute('geometry', 'primitive: plane; width: 0.42; height: 0.594')
-                  pdfEl.setAttribute('material', `color: #fff; side: double; src: ${data.path}`)
-                  pdfWrapperEl.appendChild(pdfEl);
-              }
-          });
-      }
+        function renderPage(page) {
+            const prevPdf = document.querySelector(`#${fileName}_PDF`);
+            if (prevPdf) {
+                prevPdf.parentNode.removeChild(prevPdf);
+            }
+            const pdfEl = document.createElement('a-entity');
+            const basePath = window.localStorage.getItem('PdfBasePath');
+            pdfEl.id = `${fileName}_PDF`;
+            pdfEl.setAttribute('geometry', 'primitive: plane; width: 0.42; height: 0.594')
+            pdfEl.setAttribute('material', `color: #fff; side: double; src: ${basePath}/${fileName}_${page}.png`)
+            pdfWrapperEl.appendChild(pdfEl);
 
-      async function getNextPage() {
-          await getPage(++curPage);
-      }
-      
-      async function getPrevPage() {
-          await getPage(--curPage);
-      }
+            window.localStorage.setItem('currentPage', page);
+        }
 
-      // Add event listeners for buttons
-      document.querySelector('#prev-page').addEventListener('click', function () {
-          getPrevPage();
-      });
+        async function getNextPage() {
+            const page = parseInt(window.localStorage.getItem('currentPage'));
+            const totalPages = parseInt(window.localStorage.getItem('totalPages'));
+            if (page < totalPages) {
+                const newPage = page + 1;
+                renderPage(newPage)
+            }
+        }
 
-      document.querySelector('#next-page').addEventListener('click', function () {
-          getNextPage();
-      });
+        async function getPrevPage() {
+            const page = parseInt(window.localStorage.getItem('currentPage'));
+            if (page > 1) {
+                const newPage = page - 1;
+                renderPage(newPage)
+            }
+        }
 
-      // start from page 0
-      getPage(curPage);
+        // Add event listeners for buttons
+        document.querySelector('#prev-page').addEventListener('click', function () {
+            getPrevPage();
+        });
+
+        document.querySelector('#next-page').addEventListener('click', function () {
+            getNextPage();
+        });
+
+        fetchFile();
     </script>
   </body>
 </html>
