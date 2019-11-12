@@ -89,7 +89,7 @@
         <img crossorigin="anonymous" src="img/cog_icon.png" id="cog" >
         <a-asset-item crossorigin="anonymous" id="Islands" src="/assets/gltf/Islands.glb"></a-asset-item>
         <a-asset-item crossorigin="anonymous" id="Palm" src="/assets/gltf/palm.glb"></a-asset-item>
-        <a-asset-item id="Building" src="/assets/gltf/ThinWallRmFinal.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
+        <a-asset-item id="Building" src="/assets/gltf/New_Building_final1.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
 
         <a-asset-item id="SwivelChair" src="/assets/gltf/chair4.glb"></a-asset-item>
         <a-asset-item id="Table1" src="/assets/gltf/Table_curved_legs.glb"></a-asset-item>
@@ -117,8 +117,8 @@
 
       <a-entity id="NodeName" position="36.543 4.316 -19.806" rotation="0.000 -107.878 0.000" scale="1 1 1" text-geometry="value: Node - Islands.; opacity: .5; size: .175; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
 
-      <!-- nav-mesh   -->
-      <a-entity id="navmesh-Islands2" gltf-model="/assets/gltf/navmesh_final.gltf" position="0 -0.018 0" scale="" visible="false" nav-mesh=""></a-entity>
+<!-- nav-mesh   -->
+      <a-entity id="navmesh-Islands3" gltf-model="/assets/gltf/navmesh_New_Building_final1.gltf" position="0 -0.018 0" scale="" visible="false" nav-mesh=""></a-entity>
 
       <!-- Basic movement, selection and teleport -->
       <a-entity id="avatar" networked="template:#avatar-template;attachTemplateToLocal:false;"
@@ -140,7 +140,7 @@
       <!-- Island -->
       <a-entity id="Mind_Palace_Islands" gltf-model="#Islands" position="0 -2.713 0" scale="75 75 75" shadow></a-entity>
 
-      <a-entity id="Meeting_Structure" gltf-model="#Building" position="44.698 2.155 -25.119" rotation="0 163.797 0" scale="0.02 0.02 0.02" shadow></a-entity>
+      <a-entity id="Meeting_Structure" gltf-model="#Building" position="14.301 2.424 -15.915" rotation="0 -3.484 0" scale="0.019 0.019 0.019" shadow=""></a-entity>
 
       <a-entity id="Islands_small_map" gltf-model="#Islands" position="30.536 3.371 -20.312" rotation="0 -5.872 0" scale="0.30 0.30 0.30" shadow visible=""></a-entity>
 
