@@ -1,10 +1,10 @@
 # WorkInProgress
 Virtual Construct Basic WebVR Node Network Structure "Mind Palace" project.
 
-https://rocketvirtual.com/?q=content/work-progress-vr-ui-mind-palace-project
+https://rocketvirtual.com/?q=content/vr-ui-experimentation-mind-palace-project
 
 # How to run
-1. Install NodeJS and NPM
+1. Install NodeJS and NPM (find out more here https://github.com/MozillaReality/networked-aframe )
 * https://nodejs.org/en
 
 2. Install modules needed to run node server
