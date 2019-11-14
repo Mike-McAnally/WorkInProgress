@@ -87,16 +87,16 @@
         <img crossorigin="anonymous" id="VRnode_APortal" src="img/Portal_Beach.png">
         <img crossorigin="anonymous" src="img/play_icon.png" id="play" >
         <img crossorigin="anonymous" src="img/cog_icon.png" id="cog" >
-        <a-asset-item crossorigin="anonymous" id="Islands" src="/assets/gltf/Islands.glb"></a-asset-item>
-        <a-asset-item crossorigin="anonymous" id="Palm" src="/assets/gltf/palm.glb"></a-asset-item>
-        <a-asset-item id="Building" src="/assets/gltf/New_Building_final1.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
+        <a-asset-item crossorigin="anonymous" id="Islands" src="assets/gltf/Islands.glb"></a-asset-item>
+        <a-asset-item crossorigin="anonymous" id="Palm" src="assets/gltf/palm.glb"></a-asset-item>
+        <a-asset-item id="Building" src="assets/gltf/New_Building_final1.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
 
-        <a-asset-item id="SwivelChair" src="/assets/gltf/chair4.glb"></a-asset-item>
-        <a-asset-item id="Table1" src="/assets/gltf/Table_curved_legs.glb"></a-asset-item>
-        <a-asset-item id="Shelf1" src="/assets/gltf/Pigeon_hole_shelf.glb"></a-asset-item>
-        <a-asset-item id="Computer_Desk1" src="/assets/gltf/computer_Desk.glb"></a-asset-item>
-        <a-asset-item id="Shelf2" src="/assets/gltf/shelf3.glb"></a-asset-item>
-        <a-asset-item id="Shelf3" src="/assets/gltf/shelf4.glb"></a-asset-item>
+        <a-asset-item id="SwivelChair" src="assets/gltf/chair4.glb"></a-asset-item>
+        <a-asset-item id="Table1" src="assets/gltf/Table_curved_legs.glb"></a-asset-item>
+        <a-asset-item id="Shelf1" src="assets/gltf/Pigeon_hole_shelf.glb"></a-asset-item>
+        <a-asset-item id="Computer_Desk1" src="assets/gltf/computer_Desk.glb"></a-asset-item>
+        <a-asset-item id="Shelf2" src="assets/gltf/shelf3.glb"></a-asset-item>
+        <a-asset-item id="Shelf3" src="assets/gltf/shelf4.glb"></a-asset-item>
         
         <template id="avatar-template">
           <a-entity></a-entity>
@@ -118,7 +118,7 @@
       <a-entity id="NodeName" position="36.543 4.316 -19.806" rotation="0.000 -107.878 0.000" scale="1 1 1" text-geometry="value: Node - Islands.; opacity: .5; size: .175; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
 
 <!-- nav-mesh   -->
-      <a-entity id="navmesh-Islands3" gltf-model="/assets/gltf/navmesh_New_Building_final1.gltf" position="0 -0.018 0" scale="" visible="false" nav-mesh=""></a-entity>
+      <a-entity id="navmesh-Islands3" gltf-model="assets/gltf/navmesh_New_Building_final1.gltf" position="0 -0.018 0" scale="" visible="false" nav-mesh=""></a-entity>
 
       <!-- Basic movement, selection and teleport -->
       <a-entity id="avatar" networked="template:#avatar-template;attachTemplateToLocal:false;"
@@ -141,23 +141,18 @@
       <a-entity id="Mind_Palace_Islands" gltf-model="#Islands" position="0 -2.713 0" scale="75 75 75" shadow></a-entity>
 
       <a-entity id="Meeting_Structure" gltf-model="#Building" position="14.301 2.424 -15.915" rotation="0 -3.484 0" scale="0.019 0.019 0.019" shadow=""></a-entity>
+      
+      <!-- Small Terrain Map    -->
+      <a-entity id="Islands_small_map" gltf-model="#Islands" position="26.463 3.406 -24.872" rotation="0 -5.872 0" scale="0.30 0.30 0.30" shadow visible=""></a-entity>
 
-      <a-entity id="Islands_small_map" gltf-model="#Islands" position="30.536 3.371 -20.312" rotation="0 -5.872 0" scale="0.30 0.30 0.30" shadow visible=""></a-entity>
-
-      <!-- Office Furniture commented out, use later when positioned properly
-      <a-entity id="Office_Swivel_Chair1" gltf-model="#SwivelChair" position="27.561 3.807 -19.229" rotation="0 -5.872 0" scale="0.014 0.014 0.014" shadow visible=""></a-entity>
-      <a-entity id="Office_Swivel_Chair2" gltf-model="#SwivelChair" position="30.479 3.807 -18.928" rotation="0 178.533 0" scale="0.014 0.014 0.014" shadow visible=""></a-entity>
-
-      <a-entity id="Table_curved_legs" gltf-model="#Table1" position="30.574 2.408 -20.312" rotation="0 -5.872 0" scale="0.0012 .0012 .0012" shadow visible=""></a-entity>
-
-      <a-entity id="Computer_Desk" gltf-model="#Computer_Desk1" position="27.625 2.407 -19.311" rotation="0 165.888 0" scale="0.013 0.013 0.013" shadow visible=""></a-entity>
-
-      <a-entity id="Pigeon_hole_shelf" gltf-model="#Shelf1" position="30.355 2.413 -17.485" rotation="0 167.841 0" scale="0.0125 0.0125 0.0125" shadow visible=""></a-entity>
-
-      <a-entity id="Shelf2" gltf-model="#Shelf2" position="31.262 2.408 -22.027" rotation="0 -22.006 0" scale="1.100 1.100 1.100" shadow  visible=""></a-entity>
-
-      <a-entity id="Shelf3" gltf-model="#Shelf3" position="29.432 2.408 -22.818" rotation="0 -20.376 0" scale="0.003 0.003 0.003" shadow visible=""></a-entity>
-      -->
+      <!-- Office Furniture -->
+      <a-entity id="Office_Swivel_Chair1" gltf-model="#SwivelChair" position="25.773 3.827 -18.338" rotation="0 -5.872 0" scale="0.014 0.014 0.014" shadow visible=""></a-entity>
+      <a-entity id="Table_curved_legs" gltf-model="#Table1" position="26.448 2.443 -24.856" rotation="0 -5.872 0" scale="0.0012 .0012 .0012" shadow visible=""></a-entity>
+      <a-entity id="Computer_Desk" gltf-model="#Computer_Desk1" position="25.819 2.434 -17.916" rotation="0 178.279 0" scale="0.013 0.013 0.013" shadow visible=""></a-entity>
+      <a-entity id="Pigeon_hole_shelf" gltf-model="#Shelf1" position="21.680 2.441 -16.970" rotation="0 179.482 0" scale="0.0125 0.0125 0.0125" shadow visible=""></a-entity>
+      <a-entity id="Shelf2" gltf-model="#Shelf2" position="27.351 2.437 -32.001" rotation="0 86.776 0" scale="1.100 1.100 1.100" shadow  visible=""></a-entity>
+      <a-entity id="Shelf3" gltf-model="#Shelf3" position="23.657 2.345 -32.059" rotation="0 176.324 0" scale="0.003 0.003 0.003" shadow visible=""></a-entity>
+      
       
       <!-- PDF reader component -->
       <a-entity
@@ -180,20 +175,18 @@
       <a-ocean position="0 0.986 0" scale="3 3 3" width="50" depth="50" opacity=".75" ocean="density: 45; amplitude: -0.1; speed: 0.75; speedVariance: 0.1"></a-ocean>
 
       <!-- Sky -->
-      <a-sky src="/img/pinksky.png" rotation="0 0 0"></a-sky> 
+      <a-sky src="img/pinksky.png" rotation="0 0 0"></a-sky> 
 
       <!-- Light 1 -->
-      <a-light type="ambient" position="-83.68534 30.81376 -20.81553" color="white" light="type: hemisphere; intensity: 0.35" visible=""></a-light>
+      <a-light type="ambient" position="-83.68534 30.81376 -20.81553" color="white" light="type: hemisphere; intensity: 0.700" visible=""></a-light>
 
       <!-- Light 2 -->
-      <a-light type="ambient" position="55.21461 30.81376 -26.72374" color="white" light="type: hemisphere; intensity: 0.25" visible=""></a-light>
+      <a-entity visible="" light="type: point; castShadow: true; intensity: 0.250;" position="-45.438 43.867 -34.978" rotation="-21.967 168.02 -20.169"></a-entity>
 
       <!-- Shadow Camera -->
-      <a-entity class="environment" position="-48.69131 31.09116 -7.77003" light="intensity: 0.85; castShadow: true; shadowCameraLeft: -95; shadowCameraBottom: -95; shadowCameraRight: 95; shadowCameraTop: 95; shadowRadius: 50; shadowCameraFar: 100; shadowCameraNear: 1" visible=""></a-entity>
+      <a-entity class="environment" position="-107.399 55.573 -10.162" light="intensity: 0.85; castShadow: true; shadowCameraLeft: -95; shadowCameraBottom: -95; shadowCameraRight: 95; shadowCameraTop: 95; shadowRadius: 50; shadowCameraFar: 100; shadowCameraNear: 1" visible=""></a-entity>
 
-      <a-entity visible="" light="type: point; castShadow: true; intensity: 0.25;" position="23.316 34.056 -21.984" rotation="-21.967 168.02 -20.169"></a-entity>
-
-      <a-link href="/VRnodeLabelA5.html" color="white" image="#VRnode_APortal" visible="true" title="Beach" on="click" position="33.170 4.483 -45.321" rotation="-0.164 -23.914 0" scale="2 2 2" material="shader: portal; borderEnabled: 1; pano: #VRnode_APortal; side: back"></a-link>
+      <a-link href="VRnodeLabelA5.html" color="white" image="#VRnode_APortal" visible="true" title="Beach" on="click" position="33.170 4.483 -45.321" rotation="-0.164 -23.914 0" scale="2 2 2" material="shader: portal; borderEnabled: 1; pano: #VRnode_APortal; side: back"></a-link>
 
     </a-scene>
 
