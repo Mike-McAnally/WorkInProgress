@@ -31,7 +31,7 @@ var myIceServers = [
   {"url":"stun:stun3.l.google.com:19302"}
 ];
 easyrtc.setOption("appIceServers", myIceServers);
-easyrtc.setOption("logLevel", "debug");
+easyrtc.setOption("logLevel", "error");
 easyrtc.setOption("demosEnable", false);
 
 // Overriding the default easyrtcAuth listener, only so we can directly access its callback
@@ -71,10 +71,11 @@ var rtc = easyrtc.listen(app, socketServer, null, function(err, rtcRef) {
  *  PDF API
  */
 app.get(/(.*\.pdf)\/([0-9]+)$/i, async function (req, res) {
+    let page = 1;
+    let isDoneConverting = false;
     try {
         const pdfPath = path.join(__dirname, `./public_html/assets/pdf/${req.params[0]}`);
         const fileName = req.params[0].substring(1, req.params[0].length - 4)
-    
         const pdf2pic = new PDF2Pic({
             density: 100,
             savename: fileName,
@@ -82,9 +83,18 @@ app.get(/(.*\.pdf)\/([0-9]+)$/i, async function (req, res) {
             format: "png",   
             size: "1190x1684"
         });
-        
-        const files = await pdf2pic.convertBulk(pdfPath, -1)
-        
+	const files = [];
+	do {
+            const response = await pdf2pic.convert(pdfPath, page)
+	    if (response && response.name) {
+	    	page++;
+	  	files.push(response);
+	    } else {
+	        isDoneConverting = true;
+	    }
+	} while(!isDoneConverting);
+
+        console.log('Converted file to png!');
         const response = {
             pages: files.length,
             files
