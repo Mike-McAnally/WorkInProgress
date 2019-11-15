@@ -86,7 +86,9 @@
       <a-assets>
         <img crossorigin="anonymous" id="VRnode_APortal" src="img/Portal_Beach.png">
         <img crossorigin="anonymous" src="img/play_icon.png" id="play" >
-        <img crossorigin="anonymous" src="img/cog_icon.png" id="cog" >
+        <img crossorigin="anonymous" src="img/expand_icon.png" id="expand" >
+        <img crossorigin="anonymous" src="img/collapse_icon.png" id="collapse" >
+
         <a-asset-item crossorigin="anonymous" id="Islands" src="assets/gltf/Islands.glb"></a-asset-item>
         <a-asset-item crossorigin="anonymous" id="Palm" src="assets/gltf/palm.glb"></a-asset-item>
         <a-asset-item id="Building" src="assets/gltf/New_Building_final1.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
@@ -160,9 +162,9 @@
       <!-- PDF reader component -->
       <a-entity
         id="pdf-wrapper"
-        position="32.010 3.952 -21.528"
-        rotation="4 0 0"
-        pdf-reader="fileName: vr_dev; flipIconSrc: #play; settingsIconSrc: #cog"
+        position="21.586 4 -20.687"
+        rotation="4 72.646 0"
+        pdf-reader="fileName: vr_dev; flipIconSrc: #play; expandIconSrc: #expand; collapseIconSrc: #collapse"
       ></a-entity>
 
       <!-- Palm Trees  -->

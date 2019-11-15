@@ -7,10 +7,12 @@ AFRAME.registerComponent('pdf-reader', {
         fileName: {default: ''},
         clickableClass: {default: 'clickable'},
         flipIconSrc: {default: ''},
-        settingsIconSrc: {default: ''}
+        expandIconSrc: {default: ''},
+        collapseIconSrc: {default: ''},
     },
   
     init: function() {
+        this.data.isExpanded = false;
         // Attempt to load page from localStorage (if server already has converted file into images)
         this.renderPage(parseInt(window.localStorage.getItem(`${this.data.fileName}_currentPage`)), this)
         // create prev button
@@ -33,13 +35,13 @@ AFRAME.registerComponent('pdf-reader', {
         this.el.appendChild(nextBtnEl);
 
         // create settings button
-        const settingsBtnEl = document.createElement('a-circle');
-        settingsBtnEl.id = `${this.data.fileName}-open-settings`;
-        settingsBtnEl.className = this.data.clickableClass;
-        settingsBtnEl.setAttribute('radius', '0.05');
-        settingsBtnEl.setAttribute('src', this.data.settingsIconSrc);
-        settingsBtnEl.setAttribute('position', '0.3 0.23 0.01')
-        this.el.appendChild(settingsBtnEl);
+        const expandBtnEl = document.createElement('a-circle');
+        expandBtnEl.id = `${this.data.fileName}-expand-collapse`;
+        expandBtnEl.className = this.data.clickableClass;
+        expandBtnEl.setAttribute('radius', '0.05');
+        expandBtnEl.setAttribute('src', this.data.expandIconSrc);
+        expandBtnEl.setAttribute('position', '0.3 0.23 0.01')
+        this.el.appendChild(expandBtnEl);
         
         this.attachEventListeners();
         this.fetchFile()
@@ -56,11 +58,21 @@ AFRAME.registerComponent('pdf-reader', {
             self.getNextPage(self)
         });
 
-        // TODO: add listener to animate settings button
-            // Should generate option to resize pdf file
-                // small: scale="1 1 1"
-                // medium: scale="3 3 3"
-                // large: scale="5 5 5"
+        document.querySelector(`#${this.data.fileName}-expand-collapse`).addEventListener('click', function() {
+            if (!self.data.isExpanded) {
+                self.el.setAttribute('scale', '4 4 4')
+                document.querySelector(`#${self.data.fileName}-expand-collapse`).setAttribute('material', {
+                    src: self.data.collapseIconSrc
+                })
+                self.data.isExpanded = true;
+            } else {
+                self.el.setAttribute('scale', '1 1 1')
+                document.querySelector(`#${self.data.fileName}-expand-collapse`).setAttribute('material', {
+                    src: self.data.expandIconSrc
+                })
+                self.data.isExpanded = false;
+            }
+        });
     },
 
     fetchFile: async function() {

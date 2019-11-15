@@ -39,7 +39,8 @@
     <a-scene id="main-scene" networked-scene="room: C5; debug: true; adapter: wseasyrtc; audio: true;" background="color: #FAFAFA">
         <a-assets>
             <img crossorigin="anonymous" src="img/play_icon.png" id="play" >
-            <img crossorigin="anonymous" src="img/cog_icon.png" id="cog" >
+            <img crossorigin="anonymous" src="img/expand_icon.png" id="expand" >
+            <img crossorigin="anonymous" src="img/collapse_icon.png" id="collapse" >
             <img crossorigin="anonymous" id="VRnode_DPortal" src="img/Portal_Park.png">
 
             <a-asset-item id="marbleFountain" src="assets/scene.gltf"></a-asset-item>
@@ -90,7 +91,7 @@
             id="pdf-wrapper"
             position="0 1.6 1"
             rotation="4 0 0"
-            pdf-reader="fileName: vr_dev; flipIconSrc: #play; settingsIconSrc: #cog"
+            pdf-reader="fileName: vr_dev; flipIconSrc: #play; expandIconSrc: #expand; collapseIconSrc: #collapse"
         ></a-entity>
 
         <!-- Robot template -->
