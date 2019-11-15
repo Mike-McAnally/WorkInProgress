@@ -72,38 +72,39 @@ var rtc = easyrtc.listen(app, socketServer, null, function(err, rtcRef) {
  */
 app.get(/(.*\.pdf)\/([0-9]+)$/i, async function (req, res) {
     let page = 1;
-    let isDoneConverting = false;
-    try {
-        const pdfPath = path.join(__dirname, `./public_html/assets/pdf/${req.params[0]}`);
-        const fileName = req.params[0].substring(1, req.params[0].length - 4)
-        const pdf2pic = new PDF2Pic({
-            density: 100,
-            savename: fileName,
-            savedir: `./public_html/assets/tmp/${fileName}`, 
-            format: "png",   
-            size: "1190x1684"
-        });
-	const files = [];
-	do {
+    const files = [];
+    const pdfPath = path.join(__dirname, `./public_html/assets/pdf/${req.params[0]}`);
+    const fileName = req.params[0].substring(1, req.params[0].length - 4)
+    const pdf2pic = new PDF2Pic({
+        density: 100,
+        savename: fileName,
+        savedir: `./public_html/assets/tmp/${fileName}`, 
+        format: "png",   
+        size: "1190x1684"
+    });
+    do {
+        try {
             const response = await pdf2pic.convert(pdfPath, page)
-	    if (response && response.name) {
-	    	page++;
-	  	files.push(response);
-	    } else {
-	        isDoneConverting = true;
-	    }
-	} while(!isDoneConverting);
-
-        console.log('Converted file to png!');
-        const response = {
-            pages: files.length,
-            files
+            console.log(`Converted page No.${response.page}`)
+            if (response && response.name) {
+                files.push(response);
+                page++;
+            }
+        } catch(e) {
+            if (files.length > 0) {
+                const response = {
+                    pages: files.length,
+                    files
+                }
+                res.send(response);
+                return;
+            }
+            
+            console.log(e);
+            res.status(500).send('Could not convert file');
+            return;
         }
-        res.send(response);
-    } catch(e) {
-        console.log(e);
-        res.status(500).send('Could not convert file');
-    }
+    } while(true);
 });
 
 //listen on port
