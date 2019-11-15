@@ -11,23 +11,8 @@ AFRAME.registerComponent('pdf-reader', {
     },
   
     init: function() {
-        // create "Loading File" plane
-        const pdfEl = document.createElement('a-entity');
-        pdfEl.id = `${this.data.fileName}_PDF`;
-        pdfEl.setAttribute('geometry', 'primitive: plane; width: 0.42; height: 0.594')
-        pdfEl.setAttribute('material', 'color: #fff; side: double;')
-
-        const text = document.createElement('a-text');
-        text.setAttribute('value', 'Loading File');
-        text.setAttribute('rotation', '0 0 45');
-        text.setAttribute('position', '-0.14 -0.1 0.001');
-        text.setAttribute('color', '#000');
-        text.setAttribute('width', '1.5');
-        text.setAttribute('height', '2');
-
-        pdfEl.appendChild(text);
-        this.el.appendChild(pdfEl);
-
+        // Attempt to load page from localStorage (if server already has converted file into images)
+        this.renderPage(parseInt(window.localStorage.getItem(`${this.data.fileName}_currentPage`)), this)
         // create prev button
         const prevBtnEl = document.createElement('a-circle');
         prevBtnEl.id = `${this.data.fileName}-prev-page`;
