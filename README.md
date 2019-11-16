@@ -1,6 +1,7 @@
 # WorkInProgress
 Virtual Construct Basic WebVR Node Network Structure "Mind Palace" project.
 
+Find out more update information here: 
 https://rocketvirtual.com/?q=content/vr-ui-experimentation-mind-palace-project
 
 # How to run
