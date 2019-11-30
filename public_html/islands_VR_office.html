@@ -4,7 +4,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta http-equiv="content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width,shrink-to-fit=no,user-scalable=no,maximum-scale=1,minimum-scale=1">
-    <title>Islands</title>
+    <title>Island: VR Office</title>
     <meta name="description" content="Islands WebVR-Lab environment for experimenting with networked-aframe."></meta>
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0, shrink-to-fit=no">
     <meta name="mobile-web-app-capable" content="yes">
@@ -92,7 +92,7 @@
         <a-asset-item id="Building" src="assets/gltf/New_Building_final1.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
         <a-asset-item id="Building_skeleton" src="assets/gltf/New_Building_final_skeleton1.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
         <a-asset-item id="LookOutRm" src="assets/gltf/PlanRm1.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
-        <a-asset-item id="Robot1" src="assets/gltf/robot1.glb"></a-asset-item>
+        <a-asset-item id="Robot" src="assets/gltf/robot_purple.glb"></a-asset-item>
         <img crossorigin="anonymous" src="img/michael.png" id="face_plate_robot1" >
 
         <a-asset-item id="SwivelChair" src="assets/gltf/chair4.glb"></a-asset-item>
@@ -119,7 +119,7 @@
 
       <a-entity id="mouseCursor" cursor="rayOrigin: mouse"></a-entity>
 
-      <a-entity id="NodeName" position="38.643 4.316 -27.010" rotation="0.000 -107.878 0.000" scale="1 1 1" text-geometry="value: Node - Islands.; opacity: .5; size: .175; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
+      <a-entity id="NodeName" position="-43.132 4.605 20.379" rotation="0.000 10.827 0.000" scale="0.350 0.350 0.350" text-geometry="value: Node - Island VR Office; opacity: .5; size: .175; font: https://rawgit.com/mrdoob/three.js/dev/examples/fonts/optimer_bold.typeface.json"></a-entity>
 
 <!-- nav-mesh   -->
       <a-entity id="navmesh-Islands3" gltf-model="assets/gltf/navmesh_New_Building_final1.gltf" position="0 -0.018 0" scale="" visible="false" nav-mesh=""></a-entity>
@@ -146,9 +146,11 @@
 
       <a-entity id="Meeting_Structure" gltf-model="#Building" position="14.301 2.424 -15.915" rotation="0 -3.484 0" scale="0.019 0.019 0.019" shadow="" visible="false"></a-entity>
 
-      <a-entity id="Meeting_Structure_skeleton" gltf-model="#Building_skeleton" position="-40.054 4.658 23.397" rotation="0 10.787 0" scale="0.0002 0.0002 0.0002" shadow=""></a-entity>
+      <a-entity id="Meeting_Structure_skeleton" class="clickable" gltf-model="#Building_skeleton" position="-42.594 4.632 20.704" rotation="0 10.787 0" scale="0.00008 0.00008 0.00008" shadow="" onclick="location.href='https://labs.wanderer.studio/Islands.html';"></a-entity>
 
       <a-entity id="Vista_Island_Rm" gltf-model="#LookOutRm" position="-52.809 3.397 13.048" rotation="0 -77.676 0" scale="0.019 0.019 0.019" shadow=""></a-entity>
+
+      <a-entity id="Vista_Island_Rm_skeleton" gltf-model="#LookOutRm" position="-42.850 4.632 20.846" rotation="0 -77.676 0" scale="0.00008 0.00008 0.00008" shadow="" ></a-entity>
 
       <!-- Small Terrain Map    -->
       <a-entity id="Islands_small_map" gltf-model="#Islands" position="-42.651 4.606 20.766" rotation="0 10.565 0" scale="0.30 0.30 0.30" shadow visible=""></a-entity>
@@ -161,8 +163,8 @@
       <a-entity id="Shelf2" gltf-model="#Shelf2" position="27.351 2.437 -32.001" rotation="0 86.776 0" scale="1.100 1.100 1.100" shadow  visible="false"></a-entity>
       <a-entity id="Shelf3" gltf-model="#Shelf3" position="-44.731 3.564 23.665" rotation="0 102.753 0" scale="0.003 0.003 0.003" shadow visible=""></a-entity>
 
-      <!-- Robot 1 Sample Only    -->
-      <a-entity id="Robot One" gltf-model="#Robot1" position="-40.310 5.203 21.988" rotation="0 -54.433 0" scale=".01 .01 .01" shadow visible=""></a-entity>
+      <!-- Robot Model Only    -->
+      <a-entity id="Robot_Model" gltf-model="#Robot" position="-44.887 5.455 23.067" rotation="0 95.436 0" scale=".0085 .0085 .0085" shadow visible=""></a-entity>
 
       <!-- <a-plane src="#face_plate_robot1" position="-42.510 5.383 23.113" rotation="0 179.059 0" scale="0.283 0.199 0.010" ></a-plane>  -->
       
