@@ -19,3 +19,6 @@ https://rocketvirtual.com/?q=content/vr-ui-experimentation-mind-palace-project
    `npm start`
 
 5. Open WebVR enabled browser and connect to http://localhost:3025/Islands.html with multiple devices
+
+# How to deploy
+Detailed explanations on how to deploy an instance of this project can be viewed [here](docs/setup.md)
