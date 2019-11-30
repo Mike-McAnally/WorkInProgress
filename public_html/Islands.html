@@ -93,6 +93,7 @@
         <a-asset-item crossorigin="anonymous" id="Palm" src="assets/gltf/palm.glb"></a-asset-item>
         <a-asset-item id="Building" src="assets/gltf/New_Building_final1.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
         <a-asset-item id="Building_skeleton" src="assets/gltf/New_Building_final_skeleton1.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
+        <a-asset-item id="LookOutRm" src="assets/gltf/PlanRm1.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
         <a-asset-item id="Robot1" src="assets/gltf/robot1.glb"></a-asset-item>
         <img crossorigin="anonymous" src="img/michael.png" id="face_plate_robot1" >
         <a-asset-item id="SwivelChair" src="assets/gltf/chair4.glb"></a-asset-item>
@@ -146,7 +147,9 @@
 
       <a-entity id="Meeting_Structure" gltf-model="#Building" position="14.301 2.424 -15.915" rotation="0 -3.484 0" scale="0.019 0.019 0.019" shadow=""></a-entity>
 
-      <a-entity id="Meeting_Structure_skeleton" gltf-model="#Building_skeleton" position="26.784 3.412 -25.069" rotation="0 -5.519 0" scale="0.0002 0.0002 0.0002" shadow=""></a-entity>
+      <a-entity id="Meeting_Structure_skeleton" gltf-model="#Building_skeleton" position="26.536 3.431 -24.924" rotation="0 -5.519 0" scale="0.00008 0.00008 0.00008" shadow=""></a-entity>
+
+      <a-entity id="Vista_Island_Rm" gltf-model="#LookOutRm" position="26.240 3.426 -24.841" rotation="0 -77.676 0" scale="0.00008 0.00008 0.00008" shadow=""></a-entity>
       
       <!-- Small Terrain Map    -->
       <a-entity id="Islands_small_map" gltf-model="#Islands" position="26.463 3.406 -24.872" rotation="0 -5.872 0" scale="0.30 0.30 0.30" shadow visible=""></a-entity>
@@ -159,10 +162,10 @@
       <a-entity id="Shelf2" gltf-model="#Shelf2" position="27.351 2.437 -32.001" rotation="0 86.776 0" scale="1.100 1.100 1.100" shadow  visible=""></a-entity>
       <a-entity id="Shelf3" gltf-model="#Shelf3" position="23.657 2.345 -32.059" rotation="0 176.324 0" scale="0.003 0.003 0.003" shadow visible=""></a-entity>
       
-       <!-- Robot 1 Sample Only    -->
-      <a-entity id="Robot One" gltf-model="#Robot1" position="25.874 4.229 -26.243" rotation="0 153.441 0" scale=".01 .01 .01" shadow visible=""></a-entity>
-
-      <a-plane src="#face_plate_robot1" position="26.006 4.234 -26.516" rotation="0 153.441 0" scale="0.283 0.199 0.010" ></a-plane>
+      <!-- Robot 1 Sample Only  
+      <a-entity id="Robot One" gltf-model="#Robot1" position="23.683 4.229 -34.429" rotation="0 90.735 0" scale=".01 .01 .01" shadow visible=""></a-entity>  -->
+      <!-- Face Plate 
+      <a-plane src="#face_plate_robot1" position="23.995 4.234 -34.469" rotation="0 89.363 0" scale="0.283 0.199 0.010" ></a-plane>  -->
     
       <!-- PDF reader component -->
       <a-entity
