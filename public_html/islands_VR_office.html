@@ -86,7 +86,9 @@
       <a-assets>
         <img crossorigin="anonymous" id="VRnode_APortal" src="img/Portal_Beach.png">
         <img crossorigin="anonymous" src="img/play_icon.png" id="play" >
-        <img crossorigin="anonymous" src="img/cog_icon.png" id="cog" >
+        <img crossorigin="anonymous" src="img/expand_icon.png" id="expand" >
+        <img crossorigin="anonymous" src="img/collapse_icon.png" id="collapse" >
+
         <a-asset-item crossorigin="anonymous" id="Islands" src="assets/gltf/Islands.glb"></a-asset-item>
         <a-asset-item crossorigin="anonymous" id="Palm" src="assets/gltf/palm.glb"></a-asset-item>
         <a-asset-item id="Building" src="assets/gltf/New_Building_final1.glb" nav-agent="speed: 1.5; active: true"></a-asset-item>
@@ -167,13 +169,13 @@
       <a-entity id="Robot_Model" gltf-model="#Robot" position="-44.887 5.455 23.067" rotation="0 95.436 0" scale=".0085 .0085 .0085" shadow visible=""></a-entity>
 
       <!-- <a-plane src="#face_plate_robot1" position="-42.510 5.383 23.113" rotation="0 179.059 0" scale="0.283 0.199 0.010" ></a-plane>  -->
-      
+
       <!-- PDF reader component -->
       <a-entity
         id="pdf-wrapper"
         position="-39.255 5.446 23.199"
         rotation="-0.213 -77.696 -0.920"
-        pdf-reader="fileName: vr_dev; flipIconSrc: #play; settingsIconSrc: #cog"
+        pdf-reader="fileName: vr_dev; flipIconSrc: #play; expandIconSrc: #expand; collapseIconSrc: #collapse"
       ></a-entity>
 
       <!-- Palm Trees  -->
